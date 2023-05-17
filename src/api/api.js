@@ -29,6 +29,7 @@ export const login = async (email, contrasena) => {
     // Guardar el token en el almacenamiento local (ejemplo: localStorage)
     localStorage.setItem('token', token);
     // Devolver el token
+    console.log("exito", token);
     return token;
   } catch (error) {
     console.log("error", error);
@@ -38,7 +39,7 @@ export const login = async (email, contrasena) => {
   
   export const getPosts = async () => {
     try {
-      const response = await api.get('/posts', {
+      const response = await api.get('/topicos', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

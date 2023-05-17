@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
+import { useRouter } from 'next/router';
 import { AuthContext } from '../context/AuthContext';
 import { login } from '../api/api';
 
 const LoginForm = () => {
   const { login: loginHandler } = useContext(AuthContext);
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState(null);
@@ -23,6 +25,7 @@ const LoginForm = () => {
       const token = await login(email, contrasena);
       loginHandler(token);
       setError(null);
+      router.push('/posts');
     } catch (error) {
       setError('Error de inicio de sesión');
     }
@@ -38,7 +41,7 @@ const LoginForm = () => {
       </div>
       <div>
         <label>Contraseña</label>
-        <input type="password" value={contrasena} onChange={handlePasswordChange} />
+        <input type="password" value={contrasena} onChange={handlePasswordChange} autocomplete="current-password" />
       </div>
       <button type="submit">Iniciar sesión</button>
     </form>
