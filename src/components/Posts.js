@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { getPosts } from '../api/api';
+import { getPosts } from '../lib/api';
 import Post from './Post';
 
 const Posts = () => {

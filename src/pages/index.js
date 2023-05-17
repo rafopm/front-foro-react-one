@@ -1,15 +1,18 @@
-import Layout from '@/components/Layout';
-import LoginForm from '@/components/LoginForm';
-import { Inter } from 'next/font/google'
+import Layout from "../components/Layout";
+import PostCard from "../components/PostCard";
 
+export default function Forum() {
+  // Obtener posts del estado global o de la API
 
-
-
-export default function Home() {
+  const posts = [];
 
   return (
-    <Layout title="Bienvenido">
-      <LoginForm />
+    <Layout>
+      <div className="grid grid-cols-3 gap-4">
+        {posts.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
     </Layout>
   );
 }

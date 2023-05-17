@@ -1,30 +1,20 @@
-import Head from "next/head";
-//import Footer from "./Footer";
-//import Menu from "./Menu";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
-
-export default function Layout({ children, title }) {
+export default function Layout({ children }) {
   return (
     <div>
-      <Head>
-        <title>JefArt {title ? `| ${title}` : ""}</title>
-        <meta
-          name="description"
-          content="Catálogo de regalos para toda ocasión"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div>
-        <div>
-          Menu
-        </div>
-        <div className="container">{children}</div>
-        <div>
-          Footer
+      <Navbar />
+      <div className="container mx-auto mt-4">
+        <div className="grid grid-cols-4 gap-4">
+          <div className="col-span-1">
+            <Sidebar />
+          </div>
+          <div className="col-span-3">
+            {children}
+          </div>
         </div>
       </div>
-
     </div>
   );
 }

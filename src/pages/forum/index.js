@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import { getPosts } from '../../api/api';
+import { getPosts } from '../../lib/api';
 import Layout from '@/components/Layout';
 
 const PostList = () => {
