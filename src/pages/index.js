@@ -9,9 +9,7 @@ export default function Forum() {
   return (
     <Layout>
       <div className="grid grid-cols-3 gap-4">
-        {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+
       </div>
     </Layout>
   );

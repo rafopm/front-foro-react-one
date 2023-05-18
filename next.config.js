@@ -6,8 +6,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/posts',
-        destination: '/posts/index',
+        source: '/forum',
+        destination: '/forum/index',
       },
     ];
   },
