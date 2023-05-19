@@ -1,32 +1,50 @@
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-import { fetchPosts } from '../../lib/api';
-import Layout from '@/components/Layout';
+import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Layout from "@/components/Layout";
+import Link from "next/link";
+import { AuthContext } from "@/context/AuthContext";
+import { fetchPosts } from "@/lib/api";
 
 const PostListPage = () => {
   const { user } = useContext(AuthContext);
   const [topicos, setTopicos] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
+  const router = useRouter();
+
   useEffect(() => {
-    const fetchPostData = async () => {
+    const fetchPostData = async (pageNumber) => {
       try {
-        const postData = await fetchPosts(user.token);
+        const postData = await fetchPosts(user.token, pageNumber);
 
         if (Array.isArray(postData.content)) {
           setTopicos(postData.content);
           setTotalPages(postData.totalPages);
         } else {
-          console.error('Los datos de postData.content no son un array válido:', postData.content);
+          console.error(
+            "Los datos de postData.content no son un array válido:",
+            postData.content
+          );
         }
       } catch (error) {
-        console.error('Error al obtener los posts:', error);
+        console.error("Error al obtener los posts:", error);
       }
     };
 
-    fetchPostData();
-  }, [user.token]);
+    const pageQueryParam = Number(router.query.page);
+
+    if (!isNaN(pageQueryParam) && pageQueryParam >= 1) {
+      setCurrentPage(pageQueryParam);
+      fetchPostData(pageQueryParam);
+    } else {
+      router.push("/forum?page=1"); // Redireccionar a la página 1 si no hay parámetro de página válido en la URL
+    }
+  }, [user.token, router.query.page]);
+
+  const handlePageChange = (pageNumber) => {
+    router.push(`/forum?page=${pageNumber}`);
+  };
 
   return (
     <Layout>
@@ -34,12 +52,17 @@ const PostListPage = () => {
         <h1>Listado de Posts</h1>
         <ul>
           {topicos.map((topico) => (
-            <li key={topico.id_topico}>{topico.titulo}</li>
+            <li key={topico.idtopico}>
+              <Link href={`/forum/posts/${topico.idtopico}`}>
+                {topico.titulo}
+              </Link>
+              <span> Categorías: {topico.categorias.join(", ")}</span>
+            </li>
           ))}
         </ul>
         <div>
           {Array.from({ length: totalPages }, (_, index) => (
-            <button key={index} onClick={() => setCurrentPage(index + 1)}>
+            <button key={index} onClick={() => handlePageChange(index + 1)}>
               {index + 1}
             </button>
           ))}

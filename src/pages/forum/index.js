@@ -14,18 +14,9 @@ const PostListPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const fetchPostData = async () => {
+    const fetchPostData = async (pageNumber) => {
       try {
-        const pageQueryParam = Number(router.query.page); // Obtener el número de página de la query param
-
-        // Si el valor de pageQueryParam es un número válido y mayor o igual a 0, establecerlo como currentPage
-        if (!isNaN(pageQueryParam) && pageQueryParam >= 0) {
-          setCurrentPage(pageQueryParam);
-        } else {
-          setCurrentPage(0); // Si el valor de pageQueryParam no es válido, establecer currentPage como 0
-        }
-
-        const postData = await fetchPosts(user.token, currentPage);
+        const postData = await fetchPosts(user.token, pageNumber);
 
         if (Array.isArray(postData.content)) {
           setTopicos(postData.content);
@@ -41,11 +32,19 @@ const PostListPage = () => {
       }
     };
 
-    fetchPostData();
-  }, [user.token, currentPage, router.query.page]);
+    const pageQueryParam = Number(router.query.page);
+
+    if (!isNaN(pageQueryParam) && pageQueryParam >= 1) {
+      setCurrentPage(pageQueryParam - 1); // Restar 1 al número de página para que coincida con el índice del arreglo
+      fetchPostData(pageQueryParam - 1);
+    } else {
+      router.push("/forum?page=1"); // Redireccionar a la página 1 si no hay parámetro de página válido en la URL
+    }
+  }, [user.token, router.query.page]);
 
   const handlePageChange = (pageNumber) => {
-    router.push(`/forum?page=${pageNumber}`); // Actualizar la URL con la página seleccionada
+    const nextPage = pageNumber + 1; // Sumar 1 al número de página para que coincida con el parámetro de la URL
+    router.push(`/forum?page=${nextPage}`);
   };
 
   return (
@@ -54,10 +53,11 @@ const PostListPage = () => {
         <h1>Listado de Posts</h1>
         <ul>
           {topicos.map((topico) => (
-            <li key={topico.id_topico}>
-              <Link href={`/forum/posts/${topico.id_topico}`}>
+            <li key={topico.idtopico}>
+              <Link href={`/forum/posts/${topico.idtopico}`}>
                 {topico.titulo}
               </Link>
+              <span> Categorías: {topico.categorias.join(", ")}</span>
             </li>
           ))}
         </ul>
