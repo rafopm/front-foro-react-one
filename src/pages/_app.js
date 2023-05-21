@@ -1,5 +1,6 @@
 import { AuthProvider } from '@/context/AuthContext';
 import '@/styles/globals.css'
+import 'tailwindcss/tailwind.css';
 
 
 export default function App({ Component, pageProps }) {

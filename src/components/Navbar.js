@@ -1,11 +1,18 @@
 import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
+import Styles from "../styles/NavBar.module.css";
 
 export default function Navbar() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, userLogeado } = useContext(AuthContext);
   const router = useRouter();
+
+  useEffect(() => {
+    if (userLogeado) {
+
+    }
+  }, [userLogeado]);
 
   const handleLogout = () => {
     logout();
@@ -13,20 +20,24 @@ export default function Navbar() {
   };
 
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link href="/">Inicio</Link>
-        </li>
+    <nav className={Styles.menu}>
+      <div>Logo</div>
+
+      <ul className={Styles.menuItems}>
         <li>
           {user.token ? (
-            <button onClick={handleLogout}>Cerrar sesión</button>
+            <>
+              <li>
+                <Link href="/">FORO</Link>
+              </li>
+              <li>
+                <p>Nombre: {userLogeado ? userLogeado.nombre : ""}</p>
+              </li>
+              <button onClick={handleLogout}>SALIR</button>
+            </>
           ) : (
             <Link href="/login">Iniciar sesión</Link>
           )}
-        </li>
-        <li>
-          <Link href="/forum">Foro</Link>
         </li>
       </ul>
     </nav>

@@ -1,20 +1,24 @@
 import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
+import NavbarForo from "./NavbarForo";
+import Footer from "./Footer";
+import Header from "./Header";
 
 export default function Layout({ children }) {
   return (
     <div>
-      <Navbar />
-      <div className="container mx-auto mt-4">
-        <div className="grid grid-cols-4 gap-4">
-          <div className="col-span-1">
-            <Sidebar />
-          </div>
-          <div className="col-span-3">
+      <Header />
+      <NavbarForo />
+      <div >
+        <div >
+
+          <div >
             {children}
           </div>
         </div>
       </div>
+      <div >
+            <Footer />
+          </div>
     </div>
   );
 }

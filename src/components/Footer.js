@@ -1,7 +1,7 @@
-export default function Sidebar() {
+export default function Footer() {
     return (
       <div>
-        <h2>Categorías</h2>
+        <h2>Footer</h2>
         {/* Mostrar las categorías del foro */}
       </div>
     );

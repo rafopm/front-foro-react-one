@@ -15,8 +15,8 @@ const PostDetailPage = () => {
     
     const getPostData = async () => {
       try {
-        const token = user.token;// Obtén el token de autenticación (Bearer token) desde tu contexto o cualquier otra fuente
-
+        const token = user.token;
+        
         const postData = await fetchPostById(postId, token);
         setPost(postData);
       } catch (error) {

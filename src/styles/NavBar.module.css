@@ -1,0 +1,89 @@
+.menu {
+    user-select: none;
+    
+    display: flex;
+    justify-content: space-between;
+  
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+    background-color: white;
+    z-index: 11;
+  
+ 
+    height: 100%;
+    width: 96%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .menuItems {
+    width: 85%;
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .menuLink {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0;
+   
+    text-decoration: none;
+  
+  }
+  
+  .activeLink {
+    color: orange;
+  }
+  
+  .darkModeButton {
+    width: 15%;
+    list-style: none;
+    position: relative;
+    text-align: center;
+    font-size: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .icon {
+    font-size: 30px;
+    margin-left: 10px;
+    color: orange;
+  }
+  
+  .menuText {
+    display: none;
+  }
+  
+  .logoContainer {
+    width: 25%;
+    display: none;
+    margin-left: 0px;
+  }
+  
+  .iconDarkLigth {
+    color: rgb(255, 221, 0);
+    font-size: 25px;
+  }
+  
+
+  
+  .menu hr {
+    height: 100vh;
+    width: 0.1vw;
+    border-width: 0;
+    color: green;
+    background-color: gray;
+  }
+  

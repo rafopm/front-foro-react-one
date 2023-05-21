@@ -8,7 +8,7 @@ export default function Forum() {
 
   return (
     <Layout>
-      <div className="grid grid-cols-3 gap-4">
+      <div >
 
       </div>
     </Layout>

@@ -1,3 +1,35 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+body {
+  background-color: #f9fbfd;
+  padding: 0;
+  margin: 0;
+  font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace, Rancho, Bitter;
+
+  max-width: 100vw;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+/* Estilos para pantallas pequeñas */
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+}
+
+@media screen and (min-width: 1025px) {
+  body {
+    width: 100%;
+  }
+}
