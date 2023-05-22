@@ -1,14 +1,10 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 body {
-  background-color: #f9fbfd;
+  background-color: #ffffff;
   padding: 0;
   margin: 0;
-  font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace, Rancho, Bitter;
+  font-family: ui-monospace, Lato, Bitter, Menlo, Monaco, monospace;
 
   max-width: 100vw;
   overflow-x: hidden;

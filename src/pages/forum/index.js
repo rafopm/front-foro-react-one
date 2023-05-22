@@ -5,7 +5,8 @@ import Link from "next/link";
 import { AuthContext } from "@/context/AuthContext";
 import { fetchPosts, fetchTopicReplies } from "@/lib/api";
 import Image from "next/image";
-import Styles from "../../styles/Forum.module.css"
+import Styles from "../../styles/Forum.module.css";
+import NavbarForo from "@/components/NavbarForo";
 
 const PostListPage = () => {
   const { user } = useContext(AuthContext);
@@ -74,110 +75,139 @@ const PostListPage = () => {
     fetchRepliesCounts();
   }, [topicos, user.token]);
 
-  const iconSolved = {
-    "min-width": "36px",
-    "min-height": "36px",
-    "border-radius": "50%",
-    "padding": "9px 7px",
-    "display": "block",
-    "background-color" : "#00b9a0",
-  };
+  function getCategoryBorderStyle(categoria) {
+    let borderColor = "";
 
-  const iconNotSolved = {
-    "min-width": "36px",
-    "min-height": "36px",
-    "border-radius": "50%",
-    "padding": "9px 7px",
-    "display": "block",
-    
-  };
+    switch (categoria) {
+      case "Diseño gráfico":
+        borderColor = "#ff8c2a";
+        break;
+      case "Programación":
+        borderColor = "#2a8cff";
+        break;
 
+      case "Marketing digital":
+        borderColor = "#f800f8";
+        break;
+
+        case "Idiomas":
+          borderColor = "#32fb00";
+          break;
+      // Agrega más casos para otras categorías si es necesario
+
+      default:
+        borderColor = "#000000"; // Estilo predeterminado si no coincide ninguna categoría
+        break;
+    }
+
+    return `3px solid ${borderColor}`;
+  }
 
   return (
     <Layout>
-      <div>
-        <table class="border-collapse border border-slate-800 table-auto">
-          <thead></thead>
-          <tbody class="border-collapse border border-slate-800">
+      <div className={Styles.container}>
+        <div className={Styles.titleynewtopic}>
+          <div className={Styles.title}>Tópicos más recientes</div>
+        </div>
+        <div>
+          <NavbarForo />
+        </div>
+        <div>
+          <ul className={Styles.topicoslist}>
             {topicos.map((topico) => (
-              <tr
-                class="border-collapse border border-slate-800"
-                key={topico.idtopico}
-              >
-                <td>
-                  {topico.estatus === "RESUELTO" ? (
-                    <>
-                      <Image
-                        src="../images/icon-solved.svg"
-                        width={36}
-                        height={36}
-                        alt="Resuelto"
-                        style={iconSolved}
-                      
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <span >
-                        <Image
-                          src="../images/icon-not-solved.svg"
-                          width={36}
-                          height={36}
-                          alt="No resuelto"
-                          style={iconNotSolved}
+              <li className={Styles.topico} key={topico.idtopico}>
+                <div className={Styles.descripcion}>
+                  <div className={Styles.iconcontainer}>
+                    {topico.estatus === "RESUELTO" ? (
+                      <div className={Styles.iconsolved}>
+                        <img
+                          src="../images/icon-solved.svg"
+                          alt="Icono de topico resuelto"
                         />
-                      </span>
-                    </>
-                  )}
-                </td>
-
-                <td>
-                  <Link href={`/forum/posts/${topico.idtopico}`}>
-                    {topico.titulo}
-                  </Link>
-                  <span> {topico.categorias.join(", ")}</span>
-                </td>
-                <td>
-                  <div>{repliesCounts[topico.idtopico]}</div>
-                  <div>
-                    {repliesCounts[topico.idtopico] > 1 ? (
-                      <span>Respuestas</span>
+                      </div>
                     ) : (
-                      <span>Respuesta</span>
+                      <div className={Styles.iconnotsolved}>
+                        <img
+                          src="../images/icon-not-solved.svg"
+                          alt="Icono de topico resuelto"
+                        />
+                      </div>
                     )}
                   </div>
-                </td>
-                <td>
-                  <div>Por {topico.usuarionombre}</div>
-                  <div>{topico.fechacreacion}</div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
 
+                  <div>
+                    <div>
+                      <Link
+                        href={`/forum/posts/${topico.idtopico}`}
+                        className={Styles.titletopico}
+                      >
+                        {topico.titulo}
+                      </Link>
+                    </div>
+                    <div className={Styles.categoriascontainer}>
+                      <ul className={Styles.categorylist}>
+                        {topico.categorias.map((categoria, index) => (
+                          <li
+                            key={index}
+                            style={{
+                              borderLeft: getCategoryBorderStyle(categoria),
+                            }}
+                            className={Styles.iconcategory}
+                          >
+                            {categoria}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className={Styles.autorcontainer}>
+                  <div>
+                    <div>{repliesCounts[topico.idtopico]}</div>
+                    <div>
+                      {repliesCounts[topico.idtopico] > 1 ? (
+                        <span>Respuestas</span>
+                      ) : (
+                        <span>Respuesta</span>
+                      )}
+                    </div>
+                  </div>
+                  <div>Foto</div>
+                  <div>
+                    <div>Por {topico.usuarionombre}</div>
+                    <div>{topico.fechacreacion}</div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
         <div>
-          <button
-            disabled={currentPage === 0}
-            onClick={() => handlePageChange(currentPage - 1)}
-          >
-            {"<"}
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => (
+          <div>
             <button
-              key={index}
-              onClick={() => handlePageChange(index)}
-              style={{ fontWeight: currentPage === index ? "bold" : "normal" }}
+              disabled={currentPage === 0}
+              onClick={() => handlePageChange(currentPage - 1)}
             >
-              {index + 1}
+              {"<"}
             </button>
-          ))}
-          <button
-            disabled={currentPage === totalPages - 1}
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            {">"}
-          </button>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageChange(index)}
+                style={{
+                  fontWeight: currentPage === index ? "bold" : "normal",
+                }}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              disabled={currentPage === totalPages - 1}
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              {">"}
+            </button>
+          </div>
         </div>
         <div></div>
       </div>
