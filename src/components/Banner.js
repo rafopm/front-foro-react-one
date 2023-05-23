@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Styles from "../styles/Banner.module.css";
+import Styles from "../styles/Banner.module.css"
+//import Styles from "../styles/Banner.module.css";
 
 const Banner = () => {
   const router = useRouter();

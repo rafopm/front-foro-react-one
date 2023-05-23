@@ -16,8 +16,27 @@ const PostListPage = () => {
   const router = useRouter();
 
   const [repliesCounts, setRepliesCounts] = useState({});
+  const [userPhotos, setUserPhotos] = useState({});
 
   useEffect(() => {
+    const fetchUserPhoto = async (userId, userName) => {
+      const photoPath = `/images/photos/${userId}.jpeg`;
+      const photoExists = await checkPhotoExists(photoPath);
+
+      if (photoExists) {
+        setUserPhotos((prevUserPhotos) => ({
+          ...prevUserPhotos,
+          [userId]: { photo: photoPath, initials: "" },
+        }));
+      } else {
+        const initials = userName.substring(0, 1).toUpperCase();
+        setUserPhotos((prevUserPhotos) => ({
+          ...prevUserPhotos,
+          [userId]: { photo: "", initials },
+        }));
+      }
+    };
+
     const fetchPostData = async (pageNumber) => {
       try {
         const postData = await fetchPosts(user.token, pageNumber);
@@ -36,14 +55,34 @@ const PostListPage = () => {
       }
     };
 
+    const fetchRepliesCounts = async () => {
+      const counts = {};
+
+      for (const topico of topicos) {
+        const count = await getTopicRepliesCount(topico.idtopico);
+        counts[topico.idtopico] = count;
+      }
+
+      setRepliesCounts(counts);
+    };
+
+    const fetchPostDataAndRepliesCounts = async (pageNumber) => {
+      await fetchPostData(pageNumber);
+      await fetchRepliesCounts();
+    };
+
     const pageQueryParam = Number(router.query.page);
 
     if (!isNaN(pageQueryParam) && pageQueryParam >= 1) {
-      setCurrentPage(pageQueryParam - 1); // Restar 1 al número de página para que coincida con el índice del arreglo
-      fetchPostData(pageQueryParam - 1);
+      setCurrentPage(pageQueryParam - 1);
+      fetchPostDataAndRepliesCounts(pageQueryParam - 1);
     } else {
-      router.push("/forum?page=1"); // Redireccionar a la página 1 si no hay parámetro de página válido en la URL
+      router.push("/forum?page=1");
     }
+
+    topicos.forEach((topico) => {
+      fetchUserPhoto(topico.idusuario, topico.usuarionombre);
+    });
   }, [user.token, router.query.page]);
 
   const handlePageChange = (pageNumber) => {
@@ -61,19 +100,15 @@ const PostListPage = () => {
     }
   };
 
-  const fetchRepliesCounts = async () => {
-    const counts = {};
-
-    for (const topico of topicos) {
-      const count = await getTopicRepliesCount(topico.idtopico);
-      counts[topico.idtopico] = count;
+  const checkPhotoExists = async (photoPath) => {
+    try {
+      const response = await fetch(photoPath);
+      return response.ok;
+    } catch (error) {
+      console.error("Error al verificar la existencia de la foto:", error);
+      return false;
     }
-
-    setRepliesCounts(counts);
   };
-  useEffect(() => {
-    fetchRepliesCounts();
-  }, [topicos, user.token]);
 
   function getCategoryBorderStyle(categoria) {
     let borderColor = "";
@@ -85,16 +120,13 @@ const PostListPage = () => {
       case "Programación":
         borderColor = "#2a8cff";
         break;
-
       case "Marketing digital":
         borderColor = "#f800f8";
         break;
-
-        case "Idiomas":
-          borderColor = "#32fb00";
-          break;
+      case "Idiomas":
+        borderColor = "#32fb00";
+        break;
       // Agrega más casos para otras categorías si es necesario
-
       default:
         borderColor = "#000000"; // Estilo predeterminado si no coincide ninguna categoría
         break;
@@ -102,6 +134,12 @@ const PostListPage = () => {
 
     return `3px solid ${borderColor}`;
   }
+
+  const getGravatarImage = (initial) => {
+    const gravatarURL = `https://www.gravatar.com/avatar/${initial.toLowerCase()}.png?r=PG&size=60x60&date=2023-05-22&d=https%3A%2F%2Fapp.aluracursos.com%2Fassets%2Fimages%2Fforum%2Favatar_${initial.toLowerCase()}.png`;
+
+    return gravatarURL;
+  };
 
   return (
     <Layout>
@@ -162,20 +200,42 @@ const PostListPage = () => {
                   </div>
                 </div>
                 <div className={Styles.autorcontainer}>
-                  <div>
-                    <div>{repliesCounts[topico.idtopico]}</div>
-                    <div>
+                  <div className={Styles.cantrespuestas}>
+                    <span className={Styles.numrespuesta}>
+                      {repliesCounts[topico.idtopico]}
+                    </span>
+                    <span className={Styles.respuesta}>
                       {repliesCounts[topico.idtopico] > 1 ? (
-                        <span>Respuestas</span>
+                        <span>respuestas</span>
                       ) : (
-                        <span>Respuesta</span>
+                        <span>respuesta</span>
                       )}
-                    </div>
+                    </span>
                   </div>
-                  <div>Foto</div>
-                  <div>
-                    <div>Por {topico.usuarionombre}</div>
-                    <div>{topico.fechacreacion}</div>
+                  <div className={Styles.autorcontainer}>
+                    {userPhotos[topico.idusuario] && (
+                      <div className={Styles.imagenoletra}>
+                        {userPhotos[topico.idusuario].photo ? (
+                          <img
+                            src={userPhotos[topico.idusuario].photo}
+                            alt={`Foto de ${topico.usuarionombre}`}
+                            className={Styles.imagen}
+                          />
+                        ) : (
+                          <img
+                            src={getGravatarImage(
+                              userPhotos[topico.idusuario].initials
+                            )}
+                            alt={`Foto de ${topico.usuarionombre}`}
+                            className={Styles.imagen}
+                          />
+                        )}
+                      </div>
+                    )}
+                    <div className={Styles.username}>
+                      <span>{topico.usuarionombre}</span>
+                      <span>{topico.fechacreacion}</span>
+                    </div>
                   </div>
                 </div>
               </li>
@@ -183,33 +243,20 @@ const PostListPage = () => {
           </ul>
         </div>
         <div>
-          <div>
-            <button
-              disabled={currentPage === 0}
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-              {"<"}
-            </button>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => handlePageChange(index)}
-                style={{
-                  fontWeight: currentPage === index ? "bold" : "normal",
-                }}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              disabled={currentPage === totalPages - 1}
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              {">"}
-            </button>
-          </div>
+          {totalPages > 0 && (
+            <ul className={Styles.pagination}>
+              {Array.from(Array(totalPages).keys()).map((pageNumber) => (
+                <li
+                  key={pageNumber}
+                  className={currentPage === pageNumber ? Styles.active : ""}
+                  onClick={() => handlePageChange(pageNumber)}
+                >
+                  {pageNumber + 1}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-        <div></div>
       </div>
     </Layout>
   );

@@ -4,11 +4,12 @@ body {
   background-color: #ffffff;
   padding: 0;
   margin: 0;
-  font-family: ui-monospace, Lato, Bitter, Menlo, Monaco, monospace;
+  font-family: Open Sans;
 
   max-width: 100vw;
   overflow-x: hidden;
   height: 100%;
+
 }
 
 /* Estilos para pantallas pequeñas */

@@ -150,9 +150,67 @@
   }
 
   .autorcontainer{
-     display: flex;
-    align-items: center;
-    justify-content: flex-end;
     flex-direction: row;
-    flex-wrap: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #747c81;
+  }
+
+  .cantrespuestas{
+    display: block;
+    align-self: center;
+    text-align: center;
+    margin-right: 15px;
+
+  }
+
+  .numrespuesta{
+    display: block;
+    font-size: 26px;
+    margin: 6px 0;
+    line-height: .8;
+    font-weight: 700;
+  }
+
+  .respuesta{
+    display: inline-block;
+    letter-spacing: -.5px;
+    font-size: 13px;
+  }
+
+  .autor{
+    width: auto;
+    text-align: left;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 5px;
+  }
+
+  .imagenoletra{
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .imagen{
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 1em;
+    width: 57px;
+    border-radius: 50%;
+    border: 2px solid #2a7ae4;
+  }
+
+  .letra{
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 1em;
+    width: 57px;
+    height: 57px;
+    border-radius: 50%;
+    border: 2px solid #2a7ae4;
   }
