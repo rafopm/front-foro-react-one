@@ -7,6 +7,9 @@ import { fetchPosts, fetchTopicReplies } from "@/lib/api";
 import Image from "next/image";
 import Styles from "../../styles/Forum.module.css";
 import NavbarForo from "@/components/NavbarForo";
+import { calculateTimeAgo } from "../../utils/calcularTiempo";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import { IconContext } from "react-icons";
 
 const PostListPage = () => {
   const { user } = useContext(AuthContext);
@@ -18,25 +21,27 @@ const PostListPage = () => {
   const [repliesCounts, setRepliesCounts] = useState({});
   const [userPhotos, setUserPhotos] = useState({});
 
+  const [topicosConTiempoAgo, setTopicosConTiempoAgo] = useState([]);
+
+  const fetchUserPhoto = async (userId, userName) => {
+    const photoPath = `/images/photos/${userId}.jpeg`;
+    const photoExists = await checkPhotoExists(photoPath);
+
+    if (photoExists) {
+      setUserPhotos((prevUserPhotos) => ({
+        ...prevUserPhotos,
+        [userId]: { photo: photoPath, initials: "" },
+      }));
+    } else {
+      const initials = userName.substring(0, 1).toUpperCase();
+      setUserPhotos((prevUserPhotos) => ({
+        ...prevUserPhotos,
+        [userId]: { photo: "", initials },
+      }));
+    }
+  };
+
   useEffect(() => {
-    const fetchUserPhoto = async (userId, userName) => {
-      const photoPath = `/images/photos/${userId}.jpeg`;
-      const photoExists = await checkPhotoExists(photoPath);
-
-      if (photoExists) {
-        setUserPhotos((prevUserPhotos) => ({
-          ...prevUserPhotos,
-          [userId]: { photo: photoPath, initials: "" },
-        }));
-      } else {
-        const initials = userName.substring(0, 1).toUpperCase();
-        setUserPhotos((prevUserPhotos) => ({
-          ...prevUserPhotos,
-          [userId]: { photo: "", initials },
-        }));
-      }
-    };
-
     const fetchPostData = async (pageNumber) => {
       try {
         const postData = await fetchPosts(user.token, pageNumber);
@@ -56,14 +61,14 @@ const PostListPage = () => {
     };
 
     const fetchRepliesCounts = async () => {
-      const counts = {};
+      const updatedCounts = {};
 
       for (const topico of topicos) {
         const count = await getTopicRepliesCount(topico.idtopico);
-        counts[topico.idtopico] = count;
+        updatedCounts[topico.idtopico] = count;
       }
 
-      setRepliesCounts(counts);
+      setRepliesCounts(updatedCounts);
     };
 
     const fetchPostDataAndRepliesCounts = async (pageNumber) => {
@@ -79,11 +84,18 @@ const PostListPage = () => {
     } else {
       router.push("/forum?page=1");
     }
-
-    topicos.forEach((topico) => {
-      fetchUserPhoto(topico.idusuario, topico.usuarionombre);
-    });
   }, [user.token, router.query.page]);
+
+  useEffect(() => {
+    topicos.forEach(async (topico) => {
+      fetchUserPhoto(topico.idusuario, topico.usuarionombre);
+      const formattedTimeAgo = calculateTimeAgo(topico.fechacreacion);
+      topico.tiempoAgo = formattedTimeAgo;
+      topico.numRespuestas = await getTopicRepliesCount(topico.idtopico);
+    });
+
+    setTopicosConTiempoAgo([...topicos]);
+  }, [topicos]);
 
   const handlePageChange = (pageNumber) => {
     const nextPage = pageNumber + 1; // Sumar 1 al número de página para que coincida con el parámetro de la URL
@@ -141,6 +153,12 @@ const PostListPage = () => {
     return gravatarURL;
   };
 
+  const arrowIconStyle = {
+
+    fontSize: '36px',
+    verticalAlign: 'middle',
+  };
+
   return (
     <Layout>
       <div className={Styles.container}>
@@ -152,7 +170,7 @@ const PostListPage = () => {
         </div>
         <div>
           <ul className={Styles.topicoslist}>
-            {topicos.map((topico) => (
+            {topicosConTiempoAgo.map((topico) => (
               <li className={Styles.topico} key={topico.idtopico}>
                 <div className={Styles.descripcion}>
                   <div className={Styles.iconcontainer}>
@@ -202,10 +220,10 @@ const PostListPage = () => {
                 <div className={Styles.autorcontainer}>
                   <div className={Styles.cantrespuestas}>
                     <span className={Styles.numrespuesta}>
-                      {repliesCounts[topico.idtopico]}
+                      {topico.numRespuestas}
                     </span>
                     <span className={Styles.respuesta}>
-                      {repliesCounts[topico.idtopico] > 1 ? (
+                      {topico.numRespuestas > 1 ? (
                         <span>respuestas</span>
                       ) : (
                         <span>respuesta</span>
@@ -232,9 +250,14 @@ const PostListPage = () => {
                         )}
                       </div>
                     )}
-                    <div className={Styles.username}>
-                      <span>{topico.usuarionombre}</span>
-                      <span>{topico.fechacreacion}</span>
+                    <div className={Styles.nombreytiempo}>
+                      <span className={Styles.nombreautor}>
+                        por{" "}
+                        <strong>{topico.usuarionombre.split(" ")[0]}</strong>
+                      </span>
+                      <div>
+                        <span>{topico.tiempoAgo}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -242,20 +265,68 @@ const PostListPage = () => {
             ))}
           </ul>
         </div>
-        <div>
-          {totalPages > 0 && (
-            <ul className={Styles.pagination}>
-              {Array.from(Array(totalPages).keys()).map((pageNumber) => (
-                <li
-                  key={pageNumber}
-                  className={currentPage === pageNumber ? Styles.active : ""}
-                  onClick={() => handlePageChange(pageNumber)}
-                >
-                  {pageNumber + 1}
-                </li>
-              ))}
-            </ul>
-          )}
+        <div className={Styles.paginacioncontainer}>
+          <div>
+            {totalPages > 0 && (
+              <div className={Styles.pagination}>
+                <nav>
+                  {" "}
+                  <span
+                    className={
+                      currentPage === 0
+                        ? Styles.pageizquierdaactivo
+                        : Styles.pageizquierdainactivo
+                    }
+                    onClick={() => {
+                      if (currentPage > 0) {
+                        handlePageChange(currentPage - 1);
+                      }
+                    }}
+                  >
+                    <IconContext.Provider value={{ style: arrowIconStyle }}>
+                      <RiArrowLeftSLine />
+                    </IconContext.Provider>
+                    Anterior
+                  </span>
+                </nav>
+                <nav className={Styles.pagelinks}>
+                  {" "}
+                  {Array.from(Array(totalPages).keys()).map((pageNumber) => (
+                    <span
+                      key={pageNumber}
+                      className={
+                        currentPage === pageNumber
+                          ? Styles.linkseleccionado
+                          : Styles.link
+                      }
+                      onClick={() => handlePageChange(pageNumber)}
+                    >
+                      {pageNumber + 1}
+                    </span>
+                  ))}
+                </nav>
+                <nav>
+                  <span
+                    className={
+                      currentPage === totalPages - 1
+                        ? Styles.pagederechaactivo
+                        : Styles.pagederechainactivo
+                    }
+                    onClick={() => {
+                      if (currentPage < totalPages - 1) {
+                        handlePageChange(currentPage + 1);
+                      }
+                    }}
+                  >
+                    Siguiente 
+                    <IconContext.Provider value={{ style: arrowIconStyle }}>
+                    <RiArrowRightSLine />
+                    </IconContext.Provider>
+                  </span>
+                </nav>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </Layout>

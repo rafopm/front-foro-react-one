@@ -1,216 +1,325 @@
-.container{
-    height: 100%;
-    width: 96%;
-    max-width: 1200px;
-    margin: auto;
+.container {
+  height: 100%;
+  width: 96%;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .titleynewtopic {
-    margin: 50px 0 15px;
+  margin: 50px 0 15px;
 }
 
-.title{
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -.5px;
-    color: #576169;
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: #576169;
 }
 
 .topicoslist {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0;
-    box-sizing: border-box;
-    border: 1px solid #b6bcbf;
-    list-style: none;
-  }
-  
-
-.topico{
-    padding: 18px 30px;
-    
-    border-bottom: 1px solid #b6bcbf;
-
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    flex-wrap: nowrap;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  border: 1px solid #b6bcbf;
+  list-style: none;
 }
 
-.descripcion{
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    width: 60%;
+.topico {
+  padding: 18px 30px;
+
+  border-bottom: 1px solid #b6bcbf;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
-.iconcontainer{
-    margin-right: 32px;
-    margin-right: 20px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  
-    font-size: .75em;
-    text-align: center;
+.descripcion {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 60%;
+}
+
+.iconcontainer {
+  margin-right: 32px;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  font-size: 0.75em;
+  text-align: center;
 }
 
 .iconsolved {
-    letter-spacing: -0.5px;
-    font-size: 13px;
-    min-width: 36px;
-    min-height: 36px;
-    border-radius: 50%;
-    padding: 9px 7px;
-    display: block;
-  }
+  letter-spacing: -0.5px;
+  font-size: 13px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  padding: 9px 7px;
+  display: block;
+}
+
+.iconsolved svg path {
+  fill: #f2f5f7;
+}
+
+.iconsolved img {
+  max-width: 100%;
+  border: 0;
+  border-radius: 50%;
+  fill: #808080;
+  background: #00b9a0;
+  padding: 11px 9px;
+  width: 26px;
+  height: 22px;
+}
+
+.iconnotsolved {
+  display: inline-block;
+  letter-spacing: -0.5px;
+  font-size: 13px;
+  min-width: 42px;
+  min-height: 42px;
+  margin-bottom: 0;
+  padding: 11px 8px;
+}
+
+.iconnotsolved svg path {
+  fill: #f2f5f7;
+}
+
+.iconnotsolved img {
+  max-width: 100%;
+  border: 0;
+  border-radius: 50%;
+  fill: #808080;
+  background: none;
+  width: 26px;
+}
+
+.titletopico {
+  line-height: 1.5;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  color: #277ae1;
+}
+
+.titletopico:hover,
+.titletopico:visited {
+  text-decoration: none;
+  color: #277ae1;
+}
+
+.categoriascontainer {
+  display: block;
+  font-size: 0.9em;
+}
+
+.categorylist {
+  list-style: none;
+  padding-inline-start: 0px;
+}
+
+.iconcategory {
+  margin-left: 5px;
+  margin-top: 10px;
+  display: inline-block;
+  color: #5b6957;
+  background-color: #efefef;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 400;
+  padding: 2px 4px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.autorcontainer {
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #747c81;
+}
+
+.cantrespuestas {
+  display: block;
+  align-self: center;
+  text-align: center;
+  margin-right: 15px;
+}
+
+.numrespuesta {
+  display: block;
+  font-size: 26px;
+  margin: 6px 0;
+  line-height: 0.8;
+  font-weight: 700;
+}
+
+.respuesta {
+  display: inline-block;
+  letter-spacing: -0.5px;
+  font-size: 13px;
+}
+
+.autor {
+  width: auto;
+  text-align: left;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 5px;
+}
+
+.imagenoletra {
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.imagen {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 1em;
+  width: 57px;
+  border-radius: 50%;
+  border: 2px solid #2a7ae4;
+}
+
+.letra {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 1em;
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+  border: 2px solid #2a7ae4;
+}
+
+.nombreytiempo {
+  display: flex;
+  vertical-align: middle;
+  text-align: left;
+  width: 182px;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.nombreautor {
+  margin: 0;
+  font-size: 13px;
+}
+
+.nombreautor strong {
+  color: #277ae1;
+}
+
+.tiempo {
+}
+
+.paginacioncontainer {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  width: 96%;
+  max-width: 1200px;
+  height: 80px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #fff;
+  list-style: none;
+  font-weight: 600;
+}
+
+.pageizquierdaactivo {
+  color: #babfc2;
+}
+
+.pageizquierdainactivo {
+  color: #277ae1;
+  cursor: pointer;
+}
+
+.pagederechaactivo {
+  color: #babfc2;
+}
+
+.pagederechainactivo {
+  color: #277ae1;
+  cursor: pointer;
+}
+
+.pagelinks {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.link {
+  height: 40px;
+  min-width: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border: 0;
+  text-decoration: none;
+  color: #6d7a86;
+  height: 28px;
+  min-width: 28px;
+  width: 28px;
+  margin-right: 5px;
+  border-radius: 50%;
+  transition: 0.5s;
+  margin-bottom: 0;
+  position: relative;
+  background: none;
+  cursor: pointer;
+}
+
+.linkseleccionado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border: 0;
+  text-decoration: none;
+  height: 28px;
+  min-width: 28px;
+  width: 28px;
+  margin-right: 5px;
+  border-radius: 50%;
+  transition: 0.5s;
+  margin-bottom: 0;
+  position: relative;
+  background: none;
+  cursor: pointer;
+  background-color: #277ae1;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+arrowimage{
+  color: red;
   
-  .iconsolved svg path {
-    fill: #f2f5f7;
-  }
-  
-  .iconsolved img {
-    max-width: 100%;
-    border: 0;
-    border-radius: 50%;
-    fill: #808080;
-    background: #00b9a0;
-    padding: 11px 9px;
-    width: 26px;
-    height: 22px;
-  }
-  
-
-
- .iconnotsolved {
-    display: inline-block;
-    letter-spacing: -0.5px;
-    font-size: 13px;
-    min-width: 42px;
-    min-height: 42px;
-    margin-bottom: 0;
-    padding: 11px 8px;
-  }
-  
-  .iconnotsolved svg path {
-    fill: #f2f5f7;
-  }
-  
-  .iconnotsolved img {
-    max-width: 100%;
-    border: 0;
-    border-radius: 50%;
-    fill: #808080;
-    background: none;
-    width: 26px;
-  }
-  
-  .titletopico {
-    line-height: 1.5;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 18px;
-    color: #277ae1;
-  }
-  
-  .titletopico:hover,
-  .titletopico:visited {
-    text-decoration: none;
-    color: #277ae1;
-  }
-
-  .categoriascontainer{
-    display: block;
-    font-size: .9em;
-    
-  }
-
-  .categorylist{
-    list-style: none;
-    padding-inline-start: 0px;
-    
-  }
-
-  .iconcategory{
-    margin-left: 5px;
-    margin-top:10px;
-    display: inline-block;
-    color: #5b6957;
-    background-color: #efefef;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 400;
-    padding: 2px 4px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: 100%;
-
-  }
-
-  .autorcontainer{
-    flex-direction: row;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #747c81;
-  }
-
-  .cantrespuestas{
-    display: block;
-    align-self: center;
-    text-align: center;
-    margin-right: 15px;
-
-  }
-
-  .numrespuesta{
-    display: block;
-    font-size: 26px;
-    margin: 6px 0;
-    line-height: .8;
-    font-weight: 700;
-  }
-
-  .respuesta{
-    display: inline-block;
-    letter-spacing: -.5px;
-    font-size: 13px;
-  }
-
-  .autor{
-    width: auto;
-    text-align: left;
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    margin-bottom: 5px;
-  }
-
-  .imagenoletra{
-    display: inline-block;
-    position: relative;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  .imagen{
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 1em;
-    width: 57px;
-    border-radius: 50%;
-    border: 2px solid #2a7ae4;
-  }
-
-  .letra{
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 1em;
-    width: 57px;
-    height: 57px;
-    border-radius: 50%;
-    border: 2px solid #2a7ae4;
-  }
+  vertical-align: middle;
+}
