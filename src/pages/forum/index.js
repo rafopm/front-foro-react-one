@@ -223,7 +223,7 @@ const PostListPage = () => {
                       {topico.numRespuestas}
                     </span>
                     <span className={Styles.respuesta}>
-                      {topico.numRespuestas > 1 ? (
+                      {topico.numRespuestas > 1 || topico.numRespuestas === 0 ? (
                         <span>respuestas</span>
                       ) : (
                         <span>respuesta</span>
