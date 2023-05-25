@@ -1,19 +1,25 @@
 import axios from "axios";
-export const fetchPosts = async (token, pageNumber) => {
+
+const baseUrl = process.env.API_BASEURL; 
+
+export const fetchPosts = async (token, pageNumber, urlParam = "") => {
+  
   try {
-    
-    const response = await axios.get(
-      `http://localhost:8080/topicos?page=${pageNumber}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    let url = `${baseUrl}topicos`;
+    if (urlParam) {
+      url += `/${urlParam}`;
+    }
+    url += `?page=${pageNumber}`;
+
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const posts = response.data.content.map(async (post) => {
       const categoryResponse = await axios.get(
-        `http://localhost:8080/topicocategoria/topico/${post.idtopico}`,
+        `${baseUrl}topicocategoria/topico/${post.idtopico}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -45,7 +51,7 @@ export const fetchPostById = async (postId, token) => {
   console.log("aqui");
   try {
     const response = await axios.get(
-      `http://localhost:8080/topicos/${postId}`,
+      `${baseUrl}topicos/${postId}`, // Utilizar la URL base en la solicitud
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -62,7 +68,7 @@ export const fetchPostById = async (postId, token) => {
 export const fetchTopicReplies = async (token, topicId) => {
   try {
     const respuestas = await axios.get(
-      `http://localhost:8080/respuestas/topico/${topicId}`,
+      `${baseUrl}respuestas/topico/${topicId}`, // Utilizar la URL base en la solicitud
       {
         headers: {
           Authorization: `Bearer ${token}`,

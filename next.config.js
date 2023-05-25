@@ -1,7 +1,11 @@
 const postcssPresetEnv = require('postcss-preset-env');
+require('dotenv').config();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    API_BASEURL: process.env.API_BASEURL,
+  },
   reactStrictMode: true,
   async rewrites() {
     return [

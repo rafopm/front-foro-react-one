@@ -23,6 +23,8 @@ const PostListPage = () => {
 
   const [topicosConTiempoAgo, setTopicosConTiempoAgo] = useState([]);
 
+  const categoriaParam = router.query.categoria || "";
+
   const fetchUserPhoto = async (userId, userName) => {
     const photoPath = `/images/photos/${userId}.jpeg`;
     const photoExists = await checkPhotoExists(photoPath);
@@ -44,7 +46,8 @@ const PostListPage = () => {
   useEffect(() => {
     const fetchPostData = async (pageNumber) => {
       try {
-        const postData = await fetchPosts(user.token, pageNumber);
+        const categoria = router.query.categoria || "todos";
+        const postData = await fetchPosts(user.token, pageNumber, categoria);
 
         if (Array.isArray(postData.content)) {
           setTopicos(postData.content);

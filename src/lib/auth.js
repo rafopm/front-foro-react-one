@@ -12,14 +12,12 @@ export const loginAPI = async (credentials) => {
 };
 
 export const getUserDataAPI = async (token,userEmail) => {
-  console.log("RECIBIR",token,userEmail);
   try {
     const response = await axios.get(`http://localhost:8080/usuarios/email/${userEmail}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-console.log("datos en auth",response.data);
     return response.data;
   } catch (error) {
     console.error(error);
