@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import CategoryContext from "../../context/CategoryContext";
+
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import { AuthContext } from "@/context/AuthContext";
 import { fetchPosts, fetchTopicReplies } from "@/lib/api";
-import Image from "next/image";
 import Styles from "../../styles/Forum.module.css";
-import NavbarForo from "@/components/NavbarForo";
 import { calculateTimeAgo } from "../../utils/calcularTiempo";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { IconContext } from "react-icons";
@@ -16,14 +16,15 @@ const PostListPage = () => {
   const [topicos, setTopicos] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const router = useRouter();
-
   const [repliesCounts, setRepliesCounts] = useState({});
   const [userPhotos, setUserPhotos] = useState({});
-
   const [topicosConTiempoAgo, setTopicosConTiempoAgo] = useState([]);
 
-  const categoriaParam = router.query.categoria || "";
+  const router = useRouter();
+  
+  const categoriaParam = useContext(CategoryContext);
+
+  console.log("Category",categoriaParam);//Es 
 
   const fetchUserPhoto = async (userId, userName) => {
     const photoPath = `/images/photos/${userId}.jpeg`;
@@ -42,13 +43,15 @@ const PostListPage = () => {
       }));
     }
   };
-
+  
   useEffect(() => {
+    
     const fetchPostData = async (pageNumber) => {
       try {
-        const categoria = router.query.categoria || "todos";
-        const postData = await fetchPosts(user.token, pageNumber, categoria);
+        const postData = await fetchPosts(user.token, pageNumber, categoriaParam || "todos");
 
+        console.log("Enviar",postData);
+  
         if (Array.isArray(postData.content)) {
           setTopicos(postData.content);
           setTotalPages(postData.totalPages);
@@ -62,32 +65,37 @@ const PostListPage = () => {
         console.error("Error al obtener los posts:", error);
       }
     };
-
+    
+    
+  
     const fetchRepliesCounts = async () => {
       const updatedCounts = {};
-
+  
       for (const topico of topicos) {
         const count = await getTopicRepliesCount(topico.idtopico);
         updatedCounts[topico.idtopico] = count;
       }
-
+  
       setRepliesCounts(updatedCounts);
     };
-
+  
     const fetchPostDataAndRepliesCounts = async (pageNumber) => {
       await fetchPostData(pageNumber);
       await fetchRepliesCounts();
     };
-
+  
     const pageQueryParam = Number(router.query.page);
-
+  
     if (!isNaN(pageQueryParam) && pageQueryParam >= 1) {
       setCurrentPage(pageQueryParam - 1);
       fetchPostDataAndRepliesCounts(pageQueryParam - 1);
     } else {
       router.push("/forum?page=1");
     }
-  }, [user.token, router.query.page]);
+
+    fetchPostDataAndRepliesCounts(pageQueryParam - 1);
+  }, [user.token, categoriaParam, router.query.page]);
+  
 
   useEffect(() => {
     topicos.forEach(async (topico) => {
@@ -169,7 +177,8 @@ const PostListPage = () => {
           <div className={Styles.title}>Tópicos más recientes</div>
         </div>
         <div>
-          <NavbarForo />
+
+
         </div>
         <div>
           <ul className={Styles.topicoslist}>

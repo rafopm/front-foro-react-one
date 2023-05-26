@@ -1,16 +1,34 @@
-import React from 'react'
-import Navbar from './Navbar'
-import Styles from "../styles/Header.module.css"
+import { useContext } from "react";
+import { useRouter } from "next/router";
+import { AuthContext } from "@/context/AuthContext";
+import Link from "next/link";
+import NavbarForo from "./NavbarForo";
+import Styles from "../styles/Header.module.css";
+import Navbar from "./Navbar";
+import Banner from "./Banner";
 
 const Header = () => {
+  const { user, logout } = useContext(AuthContext);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
   return (
     <div className={Styles.header}>
-      <div className={Styles.navcontainer}>
+      <div>      <div className={Styles.navcontainer}>
         <Navbar />
       </div>
-        
-    </div>
-  )
-}
+      <div>
+        <Banner />
+      </div></div>
 
-export default Header
+      <div>
+        <NavbarForo />
+      </div>
+    </div>
+  );
+};
+
+export default Header;

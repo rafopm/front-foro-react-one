@@ -1,62 +1,41 @@
 import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-export default function NavbarForo() {
+const NavbarForo = ({ categoryParam, setCategoryParam }) => {
   const { user, logout } = useContext(AuthContext);
   const router = useRouter();
 
-  const handleLogout = () => {
-    logout();
-    router.push("/login");
+  const handleCategoryChange = (categoria) => {
+    setCategoryParam(categoria);
+    router.push(`/forum/${categoria}`);
   };
 
-  const handleCategoryFilter = (category) => {
-    let encodedCategory = encodeURIComponent(category);
-    if (category === "") {
-      router.push("/forum");
-    } else if (category === "sinrespuesta") {
-      router.push("/forum/sinrespuesta");
-    } else if (category === "resueltos") {
-      router.push("/forum/resueltos");
-    } else {
-      router.push(`/forum/categoria/${encodedCategory}`);
-    }
+  const handleCategoryFilter = (categoria) => {
+    setCategoryParam(categoria);
+    router.push(`/forum/categoria/${categoria}`);
   };
-  
+
   return (
     <nav>
-      <div>
-        <select onChange={(e) => handleCategoryFilter(e.target.value)}>
-          <option value="">Todas las categorías</option>
-          <option value="Programación">Programación</option>
-          <option value="Diseño gráfico">Diseño gráfico</option>
-          <option value="Marketing digital">Marketing digital</option>
-          <option value="Idiomas">Idiomas</option>
-          <option value="Git y Github">Git y Github</option>
-          {/* Agrega más opciones para otras categorías si es necesario */}
-        </select>
-      </div>
-      <div>
-        <ul>
-          <li>
-            <Link href="/forum/[category]" as="/forum/todos">
-              Todos
-            </Link>
-          </li>
-          <li>
-            <Link href="/forum/[category]" as="/forum/sinrespuesta">
-              Sin respuesta
-            </Link>
-          </li>
-          <li>
-            <Link href="/forum/[category]" as="/forum/resueltos">
-              Resueltos
-            </Link>
-          </li>
-        </ul>
-      </div>
+      <Link href={`/forum/${categoryParam || "todos"}`}>
+        <span className={categoryParam === "todos" ? "active" : ""}>Todos</span>
+      </Link>
+
+      <Link href={`/forum/${categoryParam || "resueltos"}`}>
+        <span className={categoryParam === "resueltos" ? "active" : ""}>
+          Resueltos
+        </span>
+      </Link>
+
+      <Link href={`/forum/${categoryParam || "sinrespuesta"}`}>
+        <span className={categoryParam === "sinrespuesta" ? "active" : ""}>
+          Sin Respuesta
+        </span>
+      </Link>
     </nav>
   );
-}
+};
+
+export default NavbarForo;

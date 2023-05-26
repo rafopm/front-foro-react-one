@@ -8,8 +8,6 @@ export default function Layout({ children }) {
   return (
     <div>
       <Header />
-      <Banner />
-      
       <div >
         <div >
 
