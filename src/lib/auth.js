@@ -1,9 +1,11 @@
 import axios from "axios";
+const baseUrl = process.env.API_BASEURL; 
 
 export const loginAPI = async (credentials) => {
+  console.log("CREDENCIALES",credentials);
   try {
-    const response = await axios.post("http://localhost:8080/login", credentials);
-    const token = response.data?.jwTtoken; // Obtener el token del objeto de respuesta
+    const response = await axios.post(`${baseUrl}login`, credentials);
+    const token = response.data?.jwTtoken;
     return token;
   } catch (error) {
     console.error(error);
@@ -11,9 +13,10 @@ export const loginAPI = async (credentials) => {
   }
 };
 
-export const getUserDataAPI = async (token,userEmail) => {
+export const getUserDataAPI = async (token, userEmail) => {
+  console.log("user_api",userEmail, token);
   try {
-    const response = await axios.get(`http://localhost:8080/usuarios/email/${userEmail}`, {
+    const response = await axios.get(`${baseUrl}usuarios/email/${userEmail}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

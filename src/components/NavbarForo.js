@@ -2,38 +2,93 @@ import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
 import { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { CategoryContext } from "@/context/CategoryContext";
+import { fetchCategorias } from "@/lib/api";
 
-const NavbarForo = ({ categoryParam, setCategoryParam }) => {
-  const { user, logout } = useContext(AuthContext);
+const NavbarForo = () => {
+  const { token, userLogeado, logout } = useContext(AuthContext); // Ajusta el nombre de la variable a userLogeado
+  const { categoryParam, setCategoryParam } = useContext(CategoryContext);
   const router = useRouter();
+  const [categorias, setCategorias] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    //router.push(`/forum/buscar/${searchTerm}`);
+    setCategoryParam(`buscar/${searchTerm}`);
+    setSearchTerm("");
+  };
 
   const handleCategoryChange = (categoria) => {
     setCategoryParam(categoria);
-    router.push(`/forum/${categoria}`);
+  };
+  
+  useEffect(() => {
+    if (router.pathname === "/forum") {
+      fetchCategoryData();
+    }
+  }, [router.pathname]);
+
+  const fetchCategoryData = async () => {
+    try {
+      const postData = await fetchCategorias(token); // Utiliza userLogeado.token en lugar de user.token
+      setCategorias(postData.content);
+    } catch (error) {
+      console.error("Error al obtener las categorías:", error);
+    }
   };
 
-  const handleCategoryFilter = (categoria) => {
-    setCategoryParam(categoria);
-    router.push(`/forum/categoria/${categoria}`);
-  };
+  if (router.pathname !== "/forum") {
+    return null; // No mostrar el componente si la ruta no es "/forum"
+  }
 
   return (
     <nav>
-      <Link href={`/forum/${categoryParam || "todos"}`}>
-        <span className={categoryParam === "todos" ? "active" : ""}>Todos</span>
-      </Link>
+      <select
+        value={categoryParam}
+        onChange={(e) => handleCategoryChange(e.target.value)}
+      >
+        <option value="todos">Todos las categorías</option>
+        {categorias.map((categoria) => (
+          <option
+            key={categoria.idcategoria}
+            value={`categoria/${categoria.idcategoria}`}
+          >
+            {categoria.nombre}
+          </option>
+        ))}
+      </select>
 
-      <Link href={`/forum/${categoryParam || "resueltos"}`}>
-        <span className={categoryParam === "resueltos" ? "active" : ""}>
-          Resueltos
-        </span>
-      </Link>
+      <span
+        onClick={() => handleCategoryChange("todos")}
+        className={categoryParam === "todos" ? "active" : ""}
+      >
+        Todos
+      </span>
 
-      <Link href={`/forum/${categoryParam || "sinrespuesta"}`}>
-        <span className={categoryParam === "sinrespuesta" ? "active" : ""}>
-          Sin Respuesta
-        </span>
-      </Link>
+      <span
+        onClick={() => handleCategoryChange("resueltos")}
+        className={categoryParam === "resueltos" ? "active" : ""}
+      >
+        Resueltos
+      </span>
+
+      <span
+        onClick={() => handleCategoryChange("sinrespuesta")}
+        className={categoryParam === "sinrespuesta" ? "active" : ""}
+      >
+        Sin Respuesta
+      </span>
+
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Buscar..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button type="submit">Buscar</button>
+      </form>
     </nav>
   );
 };

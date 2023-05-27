@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
-import CategoryContext from "../../context/CategoryContext";
+import { CategoryContext } from "@/context/CategoryContext";
 
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
@@ -12,7 +12,7 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { IconContext } from "react-icons";
 
 const PostListPage = () => {
-  const { user } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const [topicos, setTopicos] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -21,10 +21,10 @@ const PostListPage = () => {
   const [topicosConTiempoAgo, setTopicosConTiempoAgo] = useState([]);
 
   const router = useRouter();
-  
-  const categoriaParam = useContext(CategoryContext);
 
-  console.log("Category",categoriaParam);//Es 
+  const { categoryParam, setCategoryParam } = useContext(CategoryContext);
+
+  console.log("Category", categoryParam); //Es
 
   const fetchUserPhoto = async (userId, userName) => {
     const photoPath = `/images/photos/${userId}.jpeg`;
@@ -43,15 +43,18 @@ const PostListPage = () => {
       }));
     }
   };
-  
+
   useEffect(() => {
-    
     const fetchPostData = async (pageNumber) => {
       try {
-        const postData = await fetchPosts(user.token, pageNumber, categoriaParam || "todos");
+        const postData = await fetchPosts(
+          token,
+          pageNumber,
+          categoryParam || "todos"
+        );
 
-        console.log("Enviar",postData);
-  
+        console.log("Enviar", postData);
+
         if (Array.isArray(postData.content)) {
           setTopicos(postData.content);
           setTotalPages(postData.totalPages);
@@ -65,27 +68,25 @@ const PostListPage = () => {
         console.error("Error al obtener los posts:", error);
       }
     };
-    
-    
-  
+
     const fetchRepliesCounts = async () => {
       const updatedCounts = {};
-  
+
       for (const topico of topicos) {
         const count = await getTopicRepliesCount(topico.idtopico);
         updatedCounts[topico.idtopico] = count;
       }
-  
+
       setRepliesCounts(updatedCounts);
     };
-  
+
     const fetchPostDataAndRepliesCounts = async (pageNumber) => {
       await fetchPostData(pageNumber);
       await fetchRepliesCounts();
     };
-  
+
     const pageQueryParam = Number(router.query.page);
-  
+
     if (!isNaN(pageQueryParam) && pageQueryParam >= 1) {
       setCurrentPage(pageQueryParam - 1);
       fetchPostDataAndRepliesCounts(pageQueryParam - 1);
@@ -94,8 +95,7 @@ const PostListPage = () => {
     }
 
     fetchPostDataAndRepliesCounts(pageQueryParam - 1);
-  }, [user.token, categoriaParam, router.query.page]);
-  
+  }, [token, categoryParam, router.query.page]);
 
   useEffect(() => {
     topicos.forEach(async (topico) => {
@@ -115,7 +115,7 @@ const PostListPage = () => {
 
   const getTopicRepliesCount = async (topicId) => {
     try {
-      const replies = await fetchTopicReplies(user.token, topicId);
+      const replies = await fetchTopicReplies(token, topicId);
       return replies.length;
     } catch (error) {
       console.error("Error al obtener las respuestas:", error);
@@ -165,9 +165,8 @@ const PostListPage = () => {
   };
 
   const arrowIconStyle = {
-
-    fontSize: '36px',
-    verticalAlign: 'middle',
+    fontSize: "36px",
+    verticalAlign: "middle",
   };
 
   return (
@@ -176,10 +175,7 @@ const PostListPage = () => {
         <div className={Styles.titleynewtopic}>
           <div className={Styles.title}>Tópicos más recientes</div>
         </div>
-        <div>
-
-
-        </div>
+        <div></div>
         <div>
           <ul className={Styles.topicoslist}>
             {topicosConTiempoAgo.map((topico) => (
@@ -235,7 +231,8 @@ const PostListPage = () => {
                       {topico.numRespuestas}
                     </span>
                     <span className={Styles.respuesta}>
-                      {topico.numRespuestas > 1 || topico.numRespuestas === 0 ? (
+                      {topico.numRespuestas > 1 ||
+                      topico.numRespuestas === 0 ? (
                         <span>respuestas</span>
                       ) : (
                         <span>respuesta</span>
@@ -276,6 +273,13 @@ const PostListPage = () => {
               </li>
             ))}
           </ul>
+        </div>
+        <div>
+          {topicosConTiempoAgo.length === 0 && (
+            <div className={Styles.mensajeSinCoincidencias}>
+              No se encontraron coincidencias
+            </div>
+          )}
         </div>
         <div className={Styles.paginacioncontainer}>
           <div>
@@ -330,9 +334,9 @@ const PostListPage = () => {
                       }
                     }}
                   >
-                    Siguiente 
+                    Siguiente
                     <IconContext.Provider value={{ style: arrowIconStyle }}>
-                    <RiArrowRightSLine />
+                      <RiArrowRightSLine />
                     </IconContext.Provider>
                   </span>
                 </nav>

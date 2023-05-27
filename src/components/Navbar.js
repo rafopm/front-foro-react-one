@@ -1,55 +1,63 @@
 import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Styles from "../styles/NavBar.module.css";
 import Image from "next/image";
+import { CategoryContext } from "@/context/CategoryContext";
 
 export default function Navbar() {
-  const { user, logout, userLogeado } = useContext(AuthContext);
+  const { userLogeado, logout } = useContext(AuthContext);
   const router = useRouter();
-  /*
-  useEffect(() => {
-    if (userLogeado) {
-    }
-  }, [userLogeado]);
-*/
+  const { setCategoryParam } = useContext(CategoryContext);
+  const [submenuOpen, setSubmenuOpen] = useState(false); // Estado para controlar si el submenu está abierto o cerrado
+  
   const handleLogout = () => {
     logout();
     router.push("/login");
+  };
+
+  const handleForumClick = () => {
+    setCategoryParam("todos");
+  };
+
+  const toggleSubmenu = () => {
+    setSubmenuOpen(!submenuOpen); // Cambiar el estado del submenu al hacer clic en el nombre del usuario
   };
 
   return (
     <div className={Styles.container}>
       <div className={Styles.logoContainer}>
         <div>
-          <Link href="/">
+          <Link href="/dashboard">
             <Image
               src="../images/logo-aluraespanhol.svg"
               width={80}
               height={50}
-              alt="Resuelto"
+              alt="Logo Alura"
             />
           </Link>
         </div>
         <div className={Styles.separator}></div>
         <div>
-          <Link href="/">
+          <Link href="/dashboard">
             <Image
               src={"../images/logo-one.svg"}
               width={102}
               height={36}
-              alt="Resuelto"
+              alt="Logo ONE"
             />
           </Link>
         </div>
       </div>
       <nav className={Styles.menu}>
         <ul className={Styles.menuItems}>
-          {user.token ? (
+          {userLogeado.activo ? (
             <>
               <li>
-                <Link href="/forum">FORO</Link>
+                <Link href="/forum">
+                  <span onClick={handleForumClick}>FORO</span>
+                </Link>
               </li>
 
               {userLogeado && (
@@ -61,13 +69,18 @@ export default function Navbar() {
                       alt="Foto del usuario"
                     />
                   </li>
-                  <li>{userLogeado.nombre.split(" ")[0].toUpperCase()}</li>
+                  <li className={submenuOpen ? Styles.open : ""}> {/* Agregar una clase "open" cuando el submenu está abierto */}
+                    <span onClick={toggleSubmenu}>
+                      {userLogeado.nombre.split(" ")[0].toUpperCase()}
+                    </span>
+                    <ul className={Styles.submenu}>
+                      <li>
+                        <span onClick={handleLogout}>SALIR</span>
+                      </li>
+                    </ul>
+                  </li>
                 </>
               )}
-
-              <li>
-                <button onClick={handleLogout}>SALIR</button>
-              </li>
             </>
           ) : (
             <li>

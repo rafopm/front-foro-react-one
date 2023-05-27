@@ -48,7 +48,6 @@ export const fetchPosts = async (token, pageNumber, urlParam = "") => {
 };
 
 export const fetchPostById = async (postId, token) => {
-  console.log("aqui");
   try {
     const response = await axios.get(
       `${baseUrl}topicos/${postId}`, // Utilizar la URL base en la solicitud
@@ -79,5 +78,39 @@ export const fetchTopicReplies = async (token, topicId) => {
   } catch (error) {
     console.error(error);
     return [];
+  }
+};
+
+export const fetchCategorias = async (token) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}categorias`, // Utilizar la URL base en la solicitud
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const fetchBuscarTopicosTitulo = async (token,palabras) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}topicos/buscar/${palabras}`, // Utilizar la URL base en la solicitud
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 };

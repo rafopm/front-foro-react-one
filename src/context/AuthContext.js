@@ -1,10 +1,14 @@
-import { loginAPI, getUserDataAPI } from "@/lib/auth";
 import { createContext, useEffect, useState } from "react";
+import { getUserDataAPI, loginAPI } from "@/lib/auth";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+
 
 export const AuthContext = createContext();
 
+
+
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({ email: "", token: null });
   const [userLogeado, setUserLogeado] = useState({
     idusuario: "",
     nombre: "",
@@ -12,69 +16,78 @@ export const AuthProvider = ({ children }) => {
     activo: false,
   });
   const [token, setToken] = useState(null);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(() => {
+    const emailFromCookie = Cookies.get("email");
+    return emailFromCookie || "";
+  });
+  const router = useRouter();
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedEmail = localStorage.getItem("email");
-    const storedUserLogeado = localStorage.getItem("userLogeado");
-    const expirationTime = localStorage.getItem("expirationTime");
+  console.log("getuserdata1",email, token);//NO RECUPERO token, solo email
+  const getUserData = async () => {
+    console.log("getuserdata2",email, token);//NO RECUPERO token, solo email
+    try {
+      const userData = await getUserDataAPI(token, email);
+      
 
-    if (storedToken && expirationTime) {
-      const currentTime = new Date().getTime();
-
-      if (currentTime < expirationTime) {
-        setUser((prevUser) => ({
-          ...prevUser,
-          email: storedEmail,
-          token: storedToken,
-        }));
-        setToken(storedToken);
-        setEmail(storedEmail);
-        setUserLogeado(storedUserLogeado);
-      } else {
-        localStorage.removeItem("token");
-        localStorage.removeItem("expirationTime");
-        localStorage.removeItem("userLogeado");
-        localStorage.removeItem("email");
+      if (userData) {
+        setUserLogeado(userData);
       }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-      if (storedUserLogeado) {
-        const parsedUserLogeado = JSON.parse(storedUserLogeado);
-        setUserLogeado(parsedUserLogeado);
-      }
+  const fetchToken = async () => {
+    const tokenFromCookie = Cookies.get("token");
+    const emailFromCookie = Cookies.get("email");
+  
+    if (tokenFromCookie) {
+      setToken(tokenFromCookie);
+      setEmail(emailFromCookie); // Guarda el email en el estado
+      
     } else {
-      // Si no hay datos de usuario en el localStorage, realizar la llamada para obtenerlos
       getUserData();
     }
+  };
+  
+  useEffect(() => {
+    fetchToken();
   }, []);
   
   useEffect(() => {
-    if (userLogeado) {
-      localStorage.setItem("userLogeado", JSON.stringify(userLogeado));
+    if (token && email) {
+      getUserData();
     }
-  }, [userLogeado]);
+  }, [token, email]);
 
-  
   const login = async (credentials) => {
     try {
       const token = await loginAPI(credentials);
-
+  
       if (token) {
         const expirationTime = new Date().getTime() + 2 * 60 * 60 * 1000;
-
-        localStorage.setItem("token", token);
-        localStorage.setItem("email", credentials.email);
-        localStorage.setItem("expirationTime", expirationTime);
-        setUser((prevUser) => ({
-          ...prevUser,
+  
+        Cookies.set("token", token, {
+          expires: new Date(expirationTime),
+          path: "/",
+          secure: true,
+          sameSite: "strict",
+        });
+        Cookies.set("email", credentials.email, {
+          expires: new Date(expirationTime),
+          path: "/",
+          secure: true,
+          sameSite: "strict",
+        });
+  
+        setUserLogeado({
+          ...userLogeado,
           email: credentials.email,
-          token: token,
-        }));
+        });
+  
         setToken(token);
-        setEmail(credentials.email);
         getUserData();
-        router.push("/");
+        router.push("/dashboard");
       } else {
         console.error("Inicio de sesión fallido");
       }
@@ -82,13 +95,11 @@ export const AuthProvider = ({ children }) => {
       console.error(error);
     }
   };
+  
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expirationTime");
-    localStorage.removeItem("email");
-    localStorage.removeItem("userLogeado");
-    setUser({ email: "", token: null });
+    Cookies.remove("token");
+    Cookies.remove("email");
     setToken(null);
     setUserLogeado({
       idusuario: "",
@@ -98,30 +109,8 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  const getUserData = async () => {
-    try {
-      const userData = await getUserDataAPI(token, email);
-      console.log("userData", userData);
-
-      if (userData) {
-        setUserLogeado(userData);
-        localStorage.setItem("userLogeado", JSON.stringify(userData));
-      }
-     //console.log("cache",storedUserLogeado);//Se verifica que si guarda
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    if (token) {
-
-      getUserData();
-    }
-  }, [token]);
-
   return (
-    <AuthContext.Provider value={{ user, userLogeado, token, login, logout }}>
+    <AuthContext.Provider value={{ userLogeado, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

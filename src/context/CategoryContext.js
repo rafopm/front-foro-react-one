@@ -1,5 +1,15 @@
-import React from "react";
+import { useState, createContext } from "react";
 
-const CategoryContext = React.createContext();
+const CategoryContext = createContext();
 
-export default CategoryContext;
+const CategoryProvider = ({ children }) => {
+  const [categoryParam, setCategoryParam] = useState("");
+
+  return (
+    <CategoryContext.Provider value={{ categoryParam, setCategoryParam }}>
+      {children}
+    </CategoryContext.Provider>
+  );
+};
+
+export { CategoryProvider, CategoryContext };

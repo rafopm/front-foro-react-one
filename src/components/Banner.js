@@ -10,9 +10,11 @@ const Banner = () => {
   let pageTitle = "";
 
   if (pathname === "/") {
-    pageTitle = "DASHBOARD";
-  } else if (pathname === "/forum") {
+    pageTitle = "";
+  } else if (pathname.startsWith("/forum")) {
     pageTitle = "FORO";
+  }else if (pathname === "/dashboard") {
+    pageTitle = "DASHBOARD";
   }
 
   return (

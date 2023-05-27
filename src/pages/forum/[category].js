@@ -13,9 +13,9 @@ const ForumCategoryPage = () => {
   }, [category]);
 
   return (
-    <CategoryContext.Provider value={categoryParam}>
+    
       <PostListPage />
-    </CategoryContext.Provider>
+    
   );
 };
 
