@@ -11,8 +11,8 @@ export default function Navbar() {
   const router = useRouter();
   const { setCategoryParam } = useContext(CategoryContext);
   const [submenuOpen, setSubmenuOpen] = useState(false); // Estado para controlar si el submenu está abierto o cerrado
-  
-  console.log("userlogeado",userLogeado);
+
+  console.log("userlogeado", userLogeado);
   const handleLogout = () => {
     logout();
     router.push("/login");
@@ -70,13 +70,14 @@ export default function Navbar() {
                       alt="Foto del usuario"
                     />
                   </li>
-                  <li className={submenuOpen ? Styles.open : ""}> {/* Agregar una clase "open" cuando el submenu está abierto */}
+                  <li className={submenuOpen ? Styles.open : ""}>
                     <span onClick={toggleSubmenu}>
                       {userLogeado.nombre.split(" ")[0].toUpperCase()}
                     </span>
                     <ul className={Styles.submenu}>
                       <li>
-                        <span onClick={handleLogout}>SALIR</span>
+                        <span onClick={handleLogout}></span>{" "}
+                        {/* Elimina el contenido dentro del span */}
                       </li>
                     </ul>
                   </li>

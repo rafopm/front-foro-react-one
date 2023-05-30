@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 80px;
 }
 
 .logoContainer {
@@ -26,7 +27,7 @@
   padding: 1.8em 1.5em;
   font-weight: 600;
   text-transform: uppercase;
-  font-size: .82rem;
+  font-size: 14px;
   letter-spacing: .02rem;
   font-family: Open sans,sans-serif;
   display: flex;
@@ -35,17 +36,23 @@
   align-items: center;
   cursor: pointer;
   position: relative;
-  font-size: 14px;
+list-style: none;
+
 }
 
 .menuItems li {
   margin-right: 40px;
+  text-decoration: none;
 }
 
 .menuItems li:last-child {
   margin-right: 40px;
 }
-  
+
+.submenu li span {
+  display: block;
+}
+
 .separator {
   width: 1px;
   height: 43px;
@@ -107,3 +114,27 @@
     background-color: gray;
   }
   
+
+  .submenu li span::after {
+    content: "SALIR";
+  }
+  
+  /* Estilizar el pseudoelemento ::after */
+  .submenu li span::after {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #000;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Cambiar el color de fondo del pseudoelemento ::after cuando se hace hover */
+  .submenu li span:hover::after {
+    background-color: #333;
+  }
