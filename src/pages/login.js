@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function Login() {
   const [emailUser, setEmailUser] = useState("");
   const [contrasena, setContrasena] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState("");
 
   const { email, token, userLogeado, login } = useContext(AuthContext);
   const router = useRouter();
@@ -30,10 +30,12 @@ export default function Login() {
 
       const success = await login(credentials);
 
-      if (success) {
-        router.push("/dashboard");
+      if (!success) {
+        setError("Usuario o contraseña incorrectos");
       } else {
-        setErrorMessage("Usuario o contraseña incorrectos");
+        setError("");
+        // Redirigir al usuario a la página de inicio después del inicio de sesión exitoso
+        router.push("/dashboard");
       }
     } catch (error) {
       console.error(error);
@@ -55,8 +57,8 @@ export default function Login() {
         value={contrasena}
         onChange={(e) => setContrasena(e.target.value)}
       />
-      <Link onClick={handleLogin} href="/login">Iniciar sesión</Link>
-      {errorMessage && <p>{errorMessage}</p>}
+      {error && <p>{error}</p>}
+      <button onClick={handleLogin}>Iniciar sesión</button>
     </div>
   );
 }
