@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 import PostCard from "../components/PostCard";
 import styles from '../styles/Home.module.css'
 import { AuthContext } from '../context/AuthContext';
-
+import Link from 'next/link';
 
 export default function Forum() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -25,7 +25,7 @@ export default function Forum() {
         <p className={styles.description}>
           ¡Bienvenido al foro de cursos de informática y desarrollo web! Únete a nuestra comunidad y comparte conocimientos, experiencias y recursos sobre programación, diseño web y mucho más.
         </p>
-        <button className={styles.button} href="/login">Ingresar</button>
+        <Link className={styles.button} href="/login">Ingresar</Link>
       </div>
    
   );
