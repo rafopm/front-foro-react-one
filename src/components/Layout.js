@@ -8,18 +8,18 @@ import { useRouter } from "next/router";
 import { AuthContext } from "@/context/AuthContext";
 
 export default function Layout({ children }) {
-  const {token, userLogeado, logout,email } = useContext(AuthContext);
+  const {token, logout } = useContext(AuthContext);
     const router = useRouter();
   
     useEffect(() => {
       // Verificar si el usuario no está autenticado
       const isAuthenticated = token;/* Lógica para verificar la autenticación del usuario */;
-      console.log(isAuthenticated);
+      
       if (!isAuthenticated) {
         // Redirigir al usuario a la página de inicio de sesión
         router.push("/login");
       }
-    }, []);
+    }, [token, router]);
 
   return (
     <div>
