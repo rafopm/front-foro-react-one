@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseUrl = process.env.API_BASEURL; 
-
+console.log("baseUrl",baseUrl)
 export const fetchPosts = async (token, pageNumber, urlParam = "") => {
   console.log("peticion: ",token," ", pageNumber," ", urlParam)
   try {
