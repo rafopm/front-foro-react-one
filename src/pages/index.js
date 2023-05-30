@@ -25,7 +25,7 @@ export default function Forum() {
         <p className={styles.description}>
           ¡Bienvenido al foro de cursos de informática y desarrollo web! Únete a nuestra comunidad y comparte conocimientos, experiencias y recursos sobre programación, diseño web y mucho más.
         </p>
-        <a className={styles.button} href="/login">Ingresar</a>
+        <button className={styles.button} href="/login">Ingresar</button>
       </div>
    
   );
