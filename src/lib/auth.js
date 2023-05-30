@@ -1,6 +1,6 @@
 import axios from "axios";
 const baseUrl = process.env.API_BASEURL; 
-
+console.log("baseUrl auth",baseUrl)
 export const loginAPI = async (credentials) => {
   console.log("CREDENCIALES",credentials);
   try {

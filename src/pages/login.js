@@ -14,7 +14,7 @@ export default function Login() {
   useEffect(() => {
     // Verificar si el usuario no está autenticado
     const isAuthenticated = token; /* Lógica para verificar la autenticación del usuario */
-    console.log("jfdksjfldskj---------------", email, token, userLogeado);
+
     if (isAuthenticated) {
       // Redirigir al usuario a la página de inicio de sesión
       router.push("/dashboard");
