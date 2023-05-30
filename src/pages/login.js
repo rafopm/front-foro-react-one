@@ -28,7 +28,7 @@ export default function Login() {
 
       await login(credentials);
 
-      router.push("/dashboard");
+      //router.push("/dashboard");
     } catch (error) {
       console.error(error);
     }

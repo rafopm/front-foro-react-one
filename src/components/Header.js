@@ -11,7 +11,7 @@ const Header = () => {
   const {token, userLogeado, logout,email } = useContext(AuthContext); // Ajusta el nombre de la variable a userLogeado
   const router = useRouter();
 
-  console.log("token--",userLogeado.email,token)
+  //console.log("token--",userLogeado.email,token)
   const handleLogout = () => {
     logout();
     router.push("/login");

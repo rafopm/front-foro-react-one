@@ -6,15 +6,8 @@ import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
-
-
 export const AuthProvider = ({ children }) => {
-  const [userLogeado, setUserLogeado] = useState({
-    idusuario: "",
-    nombre: "",
-    email: "",
-    activo: false,
-  });
+  const [userLogeado, setUserLogeado] = useState(null);
   const [token, setToken] = useState(null);
   const [email, setEmail] = useState(() => {
     const emailFromCookie = Cookies.get("email");
@@ -22,9 +15,9 @@ export const AuthProvider = ({ children }) => {
   });
   const router = useRouter();
 
-  console.log("getuserdata1",email, token);//NO RECUPERO token, solo email
+  console.log("getuserdata1",email, token);
   const getUserData = async () => {
-    console.log("getuserdata2",email, token);//NO RECUPERO token, solo email
+    console.log("getuserdata2",email, token);
     try {
       const userData = await getUserDataAPI(token, email);
       
@@ -45,9 +38,7 @@ export const AuthProvider = ({ children }) => {
       setToken(tokenFromCookie);
       setEmail(emailFromCookie); // Guarda el email en el estado
       
-    } else {
-      getUserData();
-    }
+    } 
   };
   
   useEffect(() => {
@@ -79,15 +70,16 @@ export const AuthProvider = ({ children }) => {
           secure: true,
           sameSite: "strict",
         });
-  
+  /*
         setUserLogeado({
           ...userLogeado,
           email: credentials.email,
         });
-  
+  */
         setToken(token);
-        getUserData();
-        router.push("/dashboard");
+        setEmail(credentials.email);
+        //getUserData();
+        //router.push("/dashboard");
       } else {
         console.error("Inicio de sesión fallido");
       }
@@ -95,23 +87,19 @@ export const AuthProvider = ({ children }) => {
       console.error(error);
     }
   };
-  
 
   const logout = () => {
     Cookies.remove("token");
     Cookies.remove("email");
     setToken(null);
-    setUserLogeado({
-      idusuario: "",
-      nombre: "",
-      email: "",
-      activo: false,
-    });
+    setUserLogeado(null);
   };
+
 
   return (
     <AuthContext.Provider value={{ userLogeado, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
+
 };

@@ -12,6 +12,7 @@ export default function Navbar() {
   const { setCategoryParam } = useContext(CategoryContext);
   const [submenuOpen, setSubmenuOpen] = useState(false); // Estado para controlar si el submenu está abierto o cerrado
   
+  console.log("userlogeado",userLogeado);
   const handleLogout = () => {
     logout();
     router.push("/login");
@@ -52,7 +53,7 @@ export default function Navbar() {
       </div>
       <nav className={Styles.menu}>
         <ul className={Styles.menuItems}>
-          {userLogeado.activo ? (
+          {userLogeado ? (
             <>
               <li>
                 <Link href="/forum">
