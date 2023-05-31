@@ -22,10 +22,10 @@ const Header = () => {
       <div className={Styles.navcontainer}>
         <Navbar />
       </div>
-      <div>
+      <div className={Styles.banner}>
         <Banner />
       </div>
-      <div>
+      <div className={Styles.NavbarForo}>
         <NavbarForo />
       </div>
     </div>

@@ -136,9 +136,7 @@ const PostListPage = () => {
             {/* Resto del código de la página */}
 
             <div className={Styles.container}>
-              <div className={Styles.titleynewtopic}>
-                <div className={Styles.title}>Tópicos más recientes</div>
-              </div>
+
               <div></div>
               <div>
                 <ul className={Styles.topicoslist}>

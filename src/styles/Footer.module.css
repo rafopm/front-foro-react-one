@@ -1,0 +1,44 @@
+/* Footer.module.css */
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 20px;
+    width: 96%;
+    max-width: 1200px;
+    margin: auto;
+    border-top: 1px solid rgba(110, 109, 109, 0.101);
+  }
+  
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .logo {
+    max-width: 100px;
+  }
+  
+  h3 {
+    color: gray;
+    margin-bottom: 10px;
+  }
+  
+  .socialIcons {
+    display: flex;
+  }
+  
+  .icon {
+    margin-right: 10px;
+  }
+  
+  .icon img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .column h3{
+    font-size: 12px;
+    
+  }
