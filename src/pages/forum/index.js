@@ -130,146 +130,137 @@ const PostListPage = () => {
     <Layout>
       <div>
         {isLoading ? (
-          <div className="animation"><Spinner /></div>
+          <div className="animation">
+            <Spinner />
+          </div>
         ) : (
           <div className={Styles.container}>
-            {/* Resto del código de la página */}
-
-            <div className={Styles.container}>
-
-              <div></div>
-              <div>
-                <ul className={Styles.topicoslist}>
-                  {topicosConTiempoAgo.map((topico) => (
-                    <li className={Styles.topico} key={topico.idtopico}>
-                      <div className={Styles.descripcion}>
+            <div></div>
+            <div>
+              <ul className={Styles.topicoslist}>
+                {topicosConTiempoAgo.map((topico) => (
+                  <li className={Styles.topico} key={topico.idtopico}>
+                    <div className={Styles.descripcion}>
+                      <div>
+                        <PostIsSolved status={topico.estatus} />
+                      </div>
+                      <div>
                         <div>
-                          <PostIsSolved status={topico.estatus} />
+                          <Link
+                            href={`/forum/posts/${topico.idtopico}`}
+                            className={Styles.titletopico}
+                          >
+                            {topico.titulo}
+                          </Link>
                         </div>
                         <div>
-                          <div>
-                            <Link
-                              href={`/forum/posts/${topico.idtopico}`}
-                              className={Styles.titletopico}
-                            >
-                              {topico.titulo}
-                            </Link>
-                          </div>
-                          <div>
-                            <EstilarCategorias
-                              categorymap={topico.categorias}
-                            />
-                          </div>
+                          <EstilarCategorias categorymap={topico.categorias} />
                         </div>
+                      </div>
+                    </div>
+                    <div className={Styles.autorcontainer}>
+                      <div className={Styles.cantrespuestas}>
+                        <span className={Styles.numrespuesta}>
+                          {topico.numRespuestas}
+                        </span>
+                        <span className={Styles.respuesta}>
+                          {topico.numRespuestas > 1 ||
+                          topico.numRespuestas === 0 ? (
+                            <span>respuestas</span>
+                          ) : (
+                            <span>respuesta</span>
+                          )}
+                        </span>
                       </div>
                       <div className={Styles.autorcontainer}>
-                        <div className={Styles.cantrespuestas}>
-                          <span className={Styles.numrespuesta}>
-                            {topico.numRespuestas}
-                          </span>
-                          <span className={Styles.respuesta}>
-                            {topico.numRespuestas > 1 ||
-                            topico.numRespuestas === 0 ? (
-                              <span>respuestas</span>
-                            ) : (
-                              <span>respuesta</span>
-                            )}
-                          </span>
+                        <div>
+                          <UserPhoto
+                            userId={topico.idusuario}
+                            userName={topico.usuarionombre}
+                          />
                         </div>
-                        <div className={Styles.autorcontainer}>
-                          <div>
-                            <UserPhoto
-                              userId={topico.idusuario}
-                              userName={topico.usuarionombre}
-                            />
-                          </div>
 
-                          <div className={Styles.nombreytiempo}>
-                            <span className={Styles.nombreautor}>
-                              por{" "}
-                              <strong>
-                                {topico.usuarionombre.split(" ")[0]}
-                              </strong>
-                            </span>
-                            <div>
-                              <span>{topico.tiempoAgo}</span>
-                            </div>
+                        <div className={Styles.nombreytiempo}>
+                          <span className={Styles.nombreautor}>
+                            por{" "}
+                            <strong>
+                              {topico.usuarionombre.split(" ")[0]}
+                            </strong>
+                          </span>
+                          <div>
+                            <span>{topico.tiempoAgo}</span>
                           </div>
                         </div>
                       </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className={Styles.paginacioncontainer}>
-                <div>
-                  {totalPages > 0 && (
-                    <div className={Styles.pagination}>
-                      <nav>
-                        {" "}
-                        <span
-                          className={
-                            currentPage === 0
-                              ? Styles.pageizquierdaactivo
-                              : Styles.pageizquierdainactivo
-                          }
-                          onClick={() => {
-                            if (currentPage > 0) {
-                              handlePageChange(currentPage - 1);
-                            }
-                          }}
-                        >
-                          <IconContext.Provider
-                            value={{ style: arrowIconStyle }}
-                          >
-                            <RiArrowLeftSLine />
-                          </IconContext.Provider>
-                          Anterior
-                        </span>
-                      </nav>
-                      <nav className={Styles.pagelinks}>
-                        {" "}
-                        {Array.from(Array(totalPages).keys()).map(
-                          (pageNumber) => (
-                            <span
-                              key={pageNumber}
-                              className={
-                                currentPage === pageNumber
-                                  ? Styles.linkseleccionado
-                                  : Styles.link
-                              }
-                              onClick={() => handlePageChange(pageNumber)}
-                            >
-                              {pageNumber + 1}
-                            </span>
-                          )
-                        )}
-                      </nav>
-                      <nav>
-                        <span
-                          className={
-                            currentPage === totalPages - 1
-                              ? Styles.pagederechaactivo
-                              : Styles.pagederechainactivo
-                          }
-                          onClick={() => {
-                            if (currentPage < totalPages - 1) {
-                              handlePageChange(currentPage + 1);
-                            }
-                          }}
-                        >
-                          Siguiente
-                          <IconContext.Provider
-                            value={{ style: arrowIconStyle }}
-                          >
-                            <RiArrowRightSLine />
-                          </IconContext.Provider>
-                        </span>
-                      </nav>
                     </div>
-                  )}
-                </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={Styles.paginacioncontainer}>
+              <div>
+                {totalPages > 0 && (
+                  <div className={Styles.pagination}>
+                    <nav>
+                      {" "}
+                      <span
+                        className={
+                          currentPage === 0
+                            ? Styles.pageizquierdaactivo
+                            : Styles.pageizquierdainactivo
+                        }
+                        onClick={() => {
+                          if (currentPage > 0) {
+                            handlePageChange(currentPage - 1);
+                          }
+                        }}
+                      >
+                        <IconContext.Provider value={{ style: arrowIconStyle }}>
+                          <RiArrowLeftSLine />
+                        </IconContext.Provider>
+                        Anterior
+                      </span>
+                    </nav>
+                    <nav className={Styles.pagelinks}>
+                      {" "}
+                      {Array.from(Array(totalPages).keys()).map(
+                        (pageNumber) => (
+                          <span
+                            key={pageNumber}
+                            className={
+                              currentPage === pageNumber
+                                ? Styles.linkseleccionado
+                                : Styles.link
+                            }
+                            onClick={() => handlePageChange(pageNumber)}
+                          >
+                            {pageNumber + 1}
+                          </span>
+                        )
+                      )}
+                    </nav>
+                    <nav>
+                      <span
+                        className={
+                          currentPage === totalPages - 1
+                            ? Styles.pagederechaactivo
+                            : Styles.pagederechainactivo
+                        }
+                        onClick={() => {
+                          if (currentPage < totalPages - 1) {
+                            handlePageChange(currentPage + 1);
+                          }
+                        }}
+                      >
+                        Siguiente
+                        <IconContext.Provider value={{ style: arrowIconStyle }}>
+                          <RiArrowRightSLine />
+                        </IconContext.Provider>
+                      </span>
+                    </nav>
+                  </div>
+                )}
               </div>
             </div>
           </div>
