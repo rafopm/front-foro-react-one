@@ -44,7 +44,7 @@ const DashboardPage = () => {
                 {(() => {
                   switch (course.status) {
                     case "completadoverde":
-                      return ( 
+                      return (  
                         <Image
                           src="/images/degree-green.svg"
                           width={40}
