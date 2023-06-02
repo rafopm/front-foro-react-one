@@ -153,7 +153,7 @@ export default function Login() {
               </ul>
             </div>
             <div className={styles.repositorio}>
-              <p>Repositorio: {" "}</p>
+              <p>Repositorio en Github: {" "}</p>
               <Link href="https://github.com/rafopm/api-foro-java-one">
                 <Image
                   src="/images/logos/github.png"

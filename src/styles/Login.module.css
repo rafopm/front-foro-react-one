@@ -1,9 +1,4 @@
-body {
-  background: linear-gradient(to bottom right, #aaaaaa, #444444);
-  background-size: cover;
-  height: 100vh;
-  margin: 0;
-}
+
 
 .container {
   position: relative;
@@ -23,7 +18,9 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
+
 
 .leftSection {
   width: 500px;
@@ -37,9 +34,8 @@ body {
 
 .titleWelcome {
   position: relative;
-  width: 390px;
-  height: 73px;
-  top: 50px;
+  width: 100%px;
+  height: 150px;
 
   font-family: "Roboto";
   font-style: normal;
@@ -56,10 +52,8 @@ body {
 
 .infotext {
   position: relative;
-  width: 390px;
-  height: 73px;
-
-  top: 50px;
+  width: 90%;
+  height: 10px;
 
   font-family: "Roboto";
   font-style: normal;
@@ -76,16 +70,75 @@ body {
 
 .descriptionText {
   position: relative;
-  width: 390px;
-  height: 50px;
-  left: 20px;
-  top: 70px;
+  width: 90%;
+  height: auto;
+margin-top: 10px;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
   display: flex;
   color: #ffffff;
+}
+
+
+.logosContainer {
+  position: relative;
+  margin-top: 30px;
+  height: auto;
+}
+
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+}
+
+.titleLogos {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+
+  position: relative;
+  width: 90%;
+  height: 20px;
+  left: 40px;
+  font-size: 14px;
+  border: none;
+
+  outline: none;
+  color: #c9c9c9;
+}
+
+
+.repositorio{
+  position: relative;
+  width: 90%;
+  top: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #c3c1c1;
+margin: auto;
+}
+
+.repositorio p {
+  margin-top: 0px;
+  margin-bottom: 0;
+}
+
+.repositorio img {
+  align-self: flex-start;
 }
 
 .rightSection {
@@ -102,9 +155,9 @@ body {
 
 .loginTitle {
   position: relative;
-  width: 100%;
-  height: 100px;
-
+  width: 90%;
+  height: 30px;
+margin: auto;
   margin-top: 70px;
 
   font-weight: 700;
@@ -118,8 +171,9 @@ body {
 }
 
 .userGroup {
-  width: 420px;
+  width: 70%;
   height: 60px;
+  margin: auto;
 }
 
 .inputLogin {
@@ -131,13 +185,13 @@ body {
 
   margin-bottom: -10px;
   position: relative;
-  width: 450px;
+  width: 100%;
   height: 60px;
-  left: 40px;
+
 }
 
 .inputLogin input {
-  width: 450px;
+  width: 100%;
   appearance: none;
   font-size: 20px;
   border: none;
@@ -148,7 +202,7 @@ body {
 
 .lineLogin {
   position: relative;
-  left: 40px;
+ 
   width: 100%;
   height: 5px;
   background: linear-gradient(89.99deg, #097ff5 0%, #fdfeff 99.99%);
@@ -157,7 +211,7 @@ body {
 .buttonLogin {
   margin: auto;
   position: relative;
-  width: 337px;
+  width: 60%;
   height: 45px;
   margin-top: 10px;
   background: linear-gradient(90deg, #097ff5 0%, #097ff5 100%);
@@ -185,7 +239,7 @@ body {
   align-items: center;
 
   position: relative;
-  width: 450px;
+  width: 90%;
   height: 60px;
   left: 40px;
   font-size: 20px;
@@ -204,7 +258,7 @@ body {
   margin: auto;
   margin-top: 30px;
   position: relative;
-  width: 300px;
+  width: 80%;
   height: 30px;
 
   font-size: 14px;
@@ -224,7 +278,7 @@ body {
   margin: auto;
   margin-top: -80px;
   position: relative;
-  width: 400px;
+  width: 90%;
   height: 14px;
   font-size: 14px;
   border: none;
@@ -241,59 +295,83 @@ body {
   margin-bottom: -4px;
 }
 
-.logosContainer {
-  position: relative;
-  top: 50px;
+
+
+
+@media screen and (min-width: 1025px) {
+  /* Estilos para pantallas de escritorio */
+  body {
+    font-size: 16px;
+  }
 }
 
-.logos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  flex-direction: row;
-  align-content: center;
-  justify-content: center;
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+  /* Estilos para pantallas grandes */
+  body {
+    font-size: 14px;
+  }
+.rightSection{
+  border-radius:10px 10px 0 0 ;
+}
+  
+  .container{
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    width: 524px;
+    height: 1200px;
+  }
 }
 
-.titleLogos {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
+@media screen and (max-width: 768px) and (min-width: 481px) {
+  /* Estilos para pantallas medianas */
+  body {
+    font-size: 12px;
+  }
 
-  position: relative;
-  width: 450px;
-  height: 20px;
-  left: 40px;
-  font-size: 14px;
-  border: none;
+  .container{
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    width: 524px;
+    height: 1200px;
+  }
 
-  outline: none;
-  color: #c9c9c9;
-}
-
-.repositorio{
-  position: relative;
-  top: 200px;
-  left: 50px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 10px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #c3c1c1;
+  .rightSection{
+    border-radius:10px 10px 0 0 ;
+  }
 
 }
 
-.repositorio p {
-  margin-top: 0;
-  margin-bottom: 0;
-}
+@media screen and (max-width: 480px) {
+  /* Estilos para pantallas pequeñas (móviles) */
+  body {
+    font-size: 10px;
+  }
 
-.repositorio img {
-  align-self: flex-start;
+  .container{
+    top: 0px;
+
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+  }
+
+
+
+  .leftSection {
+    width: 100%;
+    height: auto;
+  }
+
+  .rightSection {
+    border-radius:10px 10px 0 0 ;
+    width: 100%;
+  }
+
+  .repositorio{
+    margin-top: 5px;
+    margin-bottom: 30px;
+  }
+
 }
