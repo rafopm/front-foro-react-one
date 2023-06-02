@@ -6,6 +6,7 @@ import Banner from "./Banner";
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "@/context/AuthContext";
+import Styles from '../styles/Layout.module.css'
 
 export default function Layout({ children }) {
   const {token, logout } = useContext(AuthContext);
@@ -27,7 +28,7 @@ export default function Layout({ children }) {
       <div >
         <div >
 
-          <div >
+          <div className={Styles.container}>
             {children}
           </div>
         </div>

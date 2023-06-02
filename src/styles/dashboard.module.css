@@ -5,8 +5,12 @@
 }
 
 .title {
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  color: #747c81;
+  font-family: Open sans;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 29.92px;
+  margin: 0px 0px 15px;
   text-align: left;
 }
 
@@ -17,49 +21,105 @@
   gap: 1rem;
 }
 
+.cardGroup {
+  height: 276px;
+  width: 285px;
+  margin-bottom: 1rem;
+}
+
 .card {
-  flex: 1 0 200px;
-  background-color: #f1f1f1;
-  padding: 1.5rem;
-  border-radius: 8px;
+  position: relative;
+  top: -48px;
+
+
+
+  margin: 0;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-  height: 280px;
+
+  background-color: #ffffff;
+  border-color: #e3e8ed;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: #e8e1e1 0px 1px 2px 0px;
+
+  display: flex;
+  flex-direction: column;
+  font-family: Open Sans;
+  font-size: 14px;
+  padding: 23px 24px 65px 28px;
+  text-align: left;
+  padding-bottom: 0px;
 }
 
-.card:hover {
-  transform: scale(1.05);
-  animation: shake 1s;
+.cardIcon {
+  position: relative;
+  top: 0px;
+  right: -110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 54px;
+  width: 100%;
+  z-index: 15;
 }
 
-@keyframes shake {
-  0% {
-    transform: translate(0);
-  }
-  25% {
-    transform: translate(-5px, -5px);
-  }
-  50% {
-    transform: translate(5px, -5px);
-  }
-  75% {
-    transform: translate(-5px, 5px);
-  }
-  100% {
-    transform: translate(0);
-  }
+.cardType {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  color: #8696a0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18.48px;
+  text-align: left;
+  text-transform: uppercase;
 }
 
 .cardContent {
-  text-align: center;
 }
 
 .cardTitle {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  color: #8696a0;
+  font-weight: 800;
+  margin: 6px 0px 0px;
+  text-align: left;
+  font-size: 14px;
+  width: 231px;
+  height: 43px;
 }
 
-.cardCategory {
-  font-size: 1rem;
-  color: #888;
+.cardProgress {
+  width: 146px;
+  margin-top: 45px;
+}
+
+.cardCantidadGroup {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 7px;
+  margin-top: -65px;
+  align-items: center;
+  height: 50px;
+}
+
+.cardCantidad {
+  color: #747c81;
+  display: inline;
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 40px;
+  text-align: left;
+}
+
+.cardCursosCompletados {
+  color: #747c81;
+  display: inline-block;
+  font-size: 13px;
+  line-height: 14.04px;
+  text-align: left;
+  width: 65px;
 }
