@@ -348,6 +348,7 @@ margin: auto;
   }
 
   .container{
+    
     top: 0px;
 
     flex-direction: column-reverse;
@@ -357,7 +358,7 @@ margin: auto;
     margin: auto;
   }
 
-
+ 
 
   .leftSection {
     width: 100%;
@@ -365,8 +366,12 @@ margin: auto;
   }
 
   .rightSection {
+    display: flex;
     border-radius:10px 10px 0 0 ;
     width: 100%;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    flex-grow: 1;
   }
 
   .repositorio{
