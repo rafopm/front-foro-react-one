@@ -1,4 +1,7 @@
-
+.space{
+  width: 100%;
+  height: 100%;
+}
 
 .container {
   position: relative;
@@ -237,16 +240,16 @@ margin: auto;
   font-weight: 700;
   display: flex;
   align-items: center;
-
+justify-content: center;
   position: relative;
   width: 90%;
   height: 60px;
-  left: 40px;
-  font-size: 20px;
+  margin: auto;
+  font-size: 16px;
   border: none;
   background-color: white;
   outline: none;
-  color: #c9c9c9;
+  color: #ee4c4c;
 }
 
 .disclaimer {
@@ -343,15 +346,15 @@ margin: auto;
 
 @media screen and (max-width: 480px) {
   /* Estilos para pantallas pequeñas (móviles) */
-  body {
+  .space{
     font-size: 10px;
     background-color: #097ff5;
   }
 
   .container{
-    
+    border-radius: 0 ;
     top: 60px;
-
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
     flex-direction: column-reverse;
     flex-wrap: nowrap;
     width: 100%;
@@ -368,8 +371,8 @@ margin: auto;
 
   .rightSection {
     display: flex;
-    border-radius: 0 ;
-    width: 100%;
+    border-radius: 10px  ;
+    width: 90%;
     flex-direction: column;
     flex-wrap: nowrap;
     flex-grow: 1;

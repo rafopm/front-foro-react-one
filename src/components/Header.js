@@ -6,9 +6,10 @@ import NavbarForo from "./NavbarForo";
 import Styles from "../styles/Header.module.css";
 import Navbar from "./Navbar";
 import Banner from "./Banner";
+import Nav from "./Nav";
 
 const Header = () => {
-  const {token, userLogeado, logout,email } = useContext(AuthContext); // Ajusta el nombre de la variable a userLogeado
+  const { token, userLogeado, logout, email } = useContext(AuthContext); // Ajusta el nombre de la variable a userLogeado
   const router = useRouter();
 
   //console.log("token--",userLogeado.email,token)
@@ -22,6 +23,8 @@ const Header = () => {
       <div className={Styles.navcontainer}>
         <Navbar />
       </div>
+
+
       <div className={Styles.banner}>
         <Banner />
       </div>

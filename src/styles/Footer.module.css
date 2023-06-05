@@ -42,3 +42,13 @@
     font-size: 12px;
     
   }
+
+
+  
+@media screen and (max-width: 560px) {
+  
+  .footer{
+    flex-direction: column;
+    width: auto;
+  }
+}

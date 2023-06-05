@@ -38,3 +38,21 @@
   justify-content: flex-start;
   margin: 30px 0 0;
 }
+ 
+
+@media screen and (min-width: 1025px) {
+  /* Estilos para pantallas de escritorio */
+}
+
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+  /* Estilos para pantallas grandes */
+}
+
+@media screen and (max-width: 768px) and (min-width: 481px) {
+  /* Estilos para pantallas medianas */
+}
+
+@media screen and (max-width: 480px) {
+  
+
+}

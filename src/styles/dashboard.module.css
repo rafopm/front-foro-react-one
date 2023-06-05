@@ -17,7 +17,7 @@
 .cardsContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-around;
   gap: 1rem;
 }
 
@@ -55,9 +55,9 @@
 .cardIcon {
   position: relative;
   top: 0px;
-  right: -110px;
+  right: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   height: 54px;
   width: 100%;

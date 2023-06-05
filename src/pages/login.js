@@ -87,7 +87,7 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div  className={styles.space}>
       <div className={styles.container}>
         <div className={styles.leftSection}>
           <div className={styles.right}>
