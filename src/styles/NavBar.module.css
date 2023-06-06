@@ -44,7 +44,7 @@
   align-items: center;
   cursor: pointer;
   position: relative;
-  border-bottom: 1px solid #f1f0f2;
+  
 }
 
 .menuItems li {
@@ -243,5 +243,8 @@
   animation-duration: 0.3s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
+}
+.menuItems{
+  border-bottom: 1px solid #f1f0f2;
 }
 }

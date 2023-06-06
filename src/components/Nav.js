@@ -1,5 +1,6 @@
 import { AuthContext } from "@/context/AuthContext";
 import { CategoryContext } from "@/context/CategoryContext";
+import { NavContext } from "@/context/NavContext";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -11,8 +12,8 @@ const Nav = () => {
   const router = useRouter();
   const { setCategoryParam } = useContext(CategoryContext);
   const [submenuOpen, setSubmenuOpen] = useState(false);
-  const [hideComponent, setHideComponent] = useState(false); // Estado para controlar la visibilidad del componente
-
+  const [hideComponent, setHideComponent] = useState(false); 
+  const { setShowNav } = useContext(NavContext);
   const handleLogout = () => {
     logout();
     router.push("/login");
@@ -31,11 +32,12 @@ const Nav = () => {
   };
 
   const handleHide = () => {
-    setHideComponent(true); // Oculta el componente cuando se hace clic en handleHide
+    setHideComponent(true);
+    setShowNav(false);
   };
 
   if (hideComponent) {
-    return null; // Si hideComponent es true, retorna null para no renderizar el componente
+    return null; 
   }
 
   return (
