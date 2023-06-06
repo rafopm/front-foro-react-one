@@ -122,7 +122,7 @@ const NavbarForo = () => {
                 <input
                   type="text"
                   placeholder="Busque por asunto"
-                  value={searchTerm}
+                  value={searchTerm} 
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className={Styles.searchInput}
                 />

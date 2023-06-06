@@ -10,7 +10,7 @@
 .titleynewtopic {
   margin: 50px 0 15px;
 }
-
+ 
 .title {
   font-size: 22px;
   font-weight: 600;
@@ -325,4 +325,46 @@ arrowimage{
   color: red;
   
   vertical-align: middle;
+}
+
+@media screen and (max-width: 560px) {
+
+  .topico {
+    padding: 15px 12px;
+
+  }
+
+  .tiempo {
+   display: none;
+  }
+
+  .nombreytiempo{
+    flex-wrap: wrap;
+    width: auto;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .autorcontainer{
+    flex-wrap: wrap;
+  }
+
+  .nombreautor{
+    display: flex;
+    margin: 0;
+    gap: 10px;
+    font-size: 13px;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .cantrespuestas{
+    display: none;
+  }
+
+  .iconcontainer {
+    margin-right: 7px;
+    margin-left: 0px;
+    
+  }
 }

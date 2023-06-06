@@ -133,7 +133,7 @@ const PostListPage = () => {
           <div className="animation">
             <Spinner />
           </div>
-        ) : (
+        ) : ( 
           <div className={Styles.container}>
             <div></div>
             <div>
@@ -187,7 +187,7 @@ const PostListPage = () => {
                               {topico.usuarionombre.split(" ")[0]}
                             </strong>
                           </span>
-                          <div>
+                          <div className={Styles.tiempo}>
                             <span>{topico.tiempoAgo}</span>
                           </div>
                         </div>
