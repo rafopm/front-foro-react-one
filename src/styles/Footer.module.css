@@ -27,10 +27,20 @@
   
   .socialIcons {
     display: flex;
+    color: gray;
+    
   }
   
+  .socialIcons a{
+    color: inherit;
+  }
+
   .icon {
+    font-size: 40px;
     margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    color: gray
   }
   
   .icon img {
@@ -43,7 +53,7 @@
     
   }
 
-
+ 
   
 @media screen and (max-width: 560px) {
   

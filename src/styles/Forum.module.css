@@ -361,10 +361,19 @@ arrowimage{
   .cantrespuestas{
     display: none;
   }
-
+ 
   .iconcontainer {
     margin-right: 7px;
     margin-left: 0px;
     
   }
+
+  .imagenoletra{
+    display: flex;
+  }
+
+  .imagen{
+    margin:0.2em 0.5em;
+  }
+
 }

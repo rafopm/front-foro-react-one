@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { fetchPostById, fetchTopicReplies } from '@/lib/api';
 import { AuthContext } from '@/context/AuthContext';
+import Styles from '../../../styles/PostDetailPage.module.css';
 
 const PostDetailPage = () => {
   const { userLogeado,token } = useContext(AuthContext);
@@ -37,7 +38,7 @@ const PostDetailPage = () => {
 
   return (
     <Layout>
-    <div>
+    <div className={Styles.container}>
       {post ? (
         <div>
           <h1>{post.titulo}</h1>

@@ -20,7 +20,7 @@ export default function Forum() {
   return (
     
       <div className={styles.container}>
-        <img className={styles.image} src="/blue_image.jpg" alt="Blue Image" />
+        <img className={styles.image} src="/images/code-city-rezise.jpg" alt="Blue Image" />
         <h1 className={styles.title}>Foro de Cursos de Informática y Desarrollo Web</h1>
         <p className={styles.description}>
           ¡Bienvenido al foro de cursos de informática y desarrollo web! Únete a nuestra comunidad y comparte conocimientos, experiencias y recursos sobre programación, diseño web y mucho más.

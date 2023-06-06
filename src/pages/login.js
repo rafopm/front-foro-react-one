@@ -74,12 +74,16 @@ export default function Login() {
 
       const success = await login(credentials);
 
-      if (!success) {
-        setError("Verifique usuario o contraseña");
+      if (success) {
+        const isAuthenticated =
+          token; /* Lógica para verificar la autenticación del usuario */
+
+        if (isAuthenticated) {
+          // Redirigir al usuario a la página de inicio
+          router.push("/dashboard");
+        }
       } else {
-        setError("");
-        // Redirigir al usuario a la página de inicio después del inicio de sesión exitoso
-        router.push("/dashboard");
+        setError("Verifique usuario o contraseña");
       }
     } catch (error) {
       console.error(error);
@@ -87,7 +91,7 @@ export default function Login() {
   };
 
   return (
-    <div  className={styles.space}>
+    <div className={styles.space}>
       <div className={styles.container}>
         <div className={styles.leftSection}>
           <div className={styles.right}>
@@ -153,14 +157,14 @@ export default function Login() {
               </ul>
             </div>
             <div className={styles.repositorio}>
-              <p>Repositorio en Github: {" "}</p>
+              <p>Repositorio en Github: </p>
               <Link href="https://github.com/rafopm/api-foro-java-one">
                 <Image
                   src="/images/logos/github.png"
                   width={100}
                   height={50}
                   alt="github"
-                /> 
+                />
               </Link>
             </div>
           </div>
@@ -217,7 +221,7 @@ export default function Login() {
           </div>
           <div className={styles.usuarioTest}>
             <h3>Usuario y password para test</h3>
-            <p>Usuario: juan@forotest.com</p>
+            <p>Usuario: pedro@forotest.com</p>
             <p>Password: api-test*one</p>
           </div>
         </div>
