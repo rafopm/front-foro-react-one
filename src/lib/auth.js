@@ -1,8 +1,8 @@
 import axios from "axios";
 const baseUrl = process.env.API_BASEURL; 
-console.log("baseUrl auth",baseUrl)
+
 export const loginAPI = async (credentials) => {
-  console.log("CREDENCIALES",credentials);
+  
   try {
     const response = await axios.post(`${baseUrl}login`, credentials);
     const token = response.data?.jwTtoken;
@@ -14,7 +14,7 @@ export const loginAPI = async (credentials) => {
 };
 
 export const getUserDataAPI = async (token, userEmail) => {
-  console.log("user_api",userEmail, token);
+
   try {
     const response = await axios.get(`${baseUrl}usuarios/email/${userEmail}`, {
       headers: {

@@ -15,9 +15,8 @@ export const AuthProvider = ({ children }) => {
   });
   const router = useRouter();
 
-  console.log("getuserdata1",email, token);
   const getUserData = async () => {
-    console.log("getuserdata2",email, token);
+    
     try {
       const userData = await getUserDataAPI(token, email);
       
